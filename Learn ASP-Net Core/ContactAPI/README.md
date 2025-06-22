@@ -130,7 +130,7 @@ Database connection in `appsettings.json`:
 ## 🧪 Testing
 
 ### Using Swagger UI
-1. Navigate to root URL when running
+1. Navigate to `https://localhost:7001` when running
 2. Use interactive interface to test endpoints
 
 ### Using curl

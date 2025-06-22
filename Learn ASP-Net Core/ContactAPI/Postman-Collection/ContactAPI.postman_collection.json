@@ -47,23 +47,23 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts?search=john&page=1&pageSize=5",
+          "raw": "{{baseUrl}}/api/contacts?search={{searchTerm}}&page={{pageNumber}}&pageSize={{pageSize}}",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"],
           "query": [
             {
               "key": "search",
-              "value": "john",
+              "value": "{{searchTerm}}",
               "description": "Search term"
             },
             {
               "key": "page",
-              "value": "1",
+              "value": "{{pageNumber}}",
               "description": "Page number"
             },
             {
               "key": "pageSize",
-              "value": "5",
+              "value": "{{pageSize}}",
               "description": "Items per page"
             }
           ]
@@ -78,9 +78,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/1",
+          "raw": "{{baseUrl}}/api/contacts/{{contactId}}",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "1"]
+          "path": ["api", "contacts", "{{contactId}}"]
         },
         "description": "Retrieve a specific contact by ID"
       },
@@ -92,9 +92,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/email/john.doe@example.com",
+          "raw": "{{baseUrl}}/api/contacts/email/{{sampleEmail}}",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "email", "john.doe@example.com"]
+          "path": ["api", "contacts", "email", "{{sampleEmail}}"]
         },
         "description": "Retrieve a contact by email address"
       },
@@ -107,12 +107,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "{{contentType}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"+1234567890\",\n  \"address\": \"123 Main St, City, State 12345\"\n}",
+          "raw": "{\n  \"firstName\": \"{{sampleFirstName}}\",\n  \"lastName\": \"{{sampleLastName}}\",\n  \"email\": \"{{sampleEmail}}\",\n  \"phoneNumber\": \"{{samplePhoneNumber}}\",\n  \"address\": \"{{sampleAddress}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -135,12 +135,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "{{contentType}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"phoneNumber\": \"+0987654321\"\n}",
+          "raw": "{\n  \"firstName\": \"{{testFirstName}}\",\n  \"lastName\": \"{{testLastName}}\",\n  \"email\": \"{{testEmail}}\",\n  \"phoneNumber\": \"{{testPhoneNumber}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -163,12 +163,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "{{contentType}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"phoneNumber\": \"+1234567890\",\n  \"address\": \"456 Oak Ave, Town, State 67890\"\n}",
+          "raw": "{\n  \"firstName\": \"{{sampleFirstName}}\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john.smith@example.com\",\n  \"phoneNumber\": \"{{samplePhoneNumber}}\",\n  \"address\": \"{{testAddress}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -176,9 +176,9 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/1",
+          "raw": "{{baseUrl}}/api/contacts/{{contactId}}",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "1"]
+          "path": ["api", "contacts", "{{contactId}}"]
         },
         "description": "Update all fields of a contact"
       },
@@ -191,12 +191,12 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "{{contentType}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Johnson\"\n}",
+          "raw": "{\n  \"firstName\": \"{{testFirstName}}\",\n  \"lastName\": \"Johnson\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -204,9 +204,9 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/1",
+          "raw": "{{baseUrl}}/api/contacts/{{contactId}}",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "1"]
+          "path": ["api", "contacts", "{{contactId}}"]
         },
         "description": "Update only specific fields of a contact"
       },
@@ -218,9 +218,9 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/1",
+          "raw": "{{baseUrl}}/api/contacts/{{contactId}}",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "1"]
+          "path": ["api", "contacts", "{{contactId}}"]
         },
         "description": "Delete a contact by ID"
       },
@@ -236,12 +236,12 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "{{contentType}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\",\n  \"email\": \"invalid-email\",\n  \"phoneNumber\": \"+1234567890\"\n}",
+              "raw": "{\n  \"firstName\": \"{{testFirstName}}\",\n  \"lastName\": \"{{testLastName}}\",\n  \"email\": \"invalid-email\",\n  \"phoneNumber\": \"{{testPhoneNumber}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -264,12 +264,12 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "{{contentType}}"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Duplicate\",\n  \"lastName\": \"User\",\n  \"email\": \"john.doe@example.com\",\n  \"phoneNumber\": \"+1234567890\"\n}",
+              "raw": "{\n  \"firstName\": \"Duplicate\",\n  \"lastName\": \"User\",\n  \"email\": \"{{sampleEmail}}\",\n  \"phoneNumber\": \"{{testPhoneNumber}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
