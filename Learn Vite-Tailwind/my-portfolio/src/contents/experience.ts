@@ -35,7 +35,7 @@ export const data = [
     },
     {
         date: "2009-2010",
-        title: "Test Developer", // link to the company
+        title: "Hosting Support", // link to the company
         description: [
             "Specialized in VPS and dedicated server management, providing enterprise-grade web hosting solutions for clients. Configured and optimized Apache/Nginx servers, implemented SSL certificates for secure connections, and managed DNS configurations. Maintained high-performance dedicated servers with custom configurations, automated backups, and proactive monitoring. Handled server security, including firewall setup, DDoS protection, and regular security audits."
             ,"Expertise in managing cPanel/WHM environments, implementing server hardening practices, and providing 24/7 technical support for mission-critical hosting infrastructure. Successfully migrated and scaled hosting environments based on client requirements."

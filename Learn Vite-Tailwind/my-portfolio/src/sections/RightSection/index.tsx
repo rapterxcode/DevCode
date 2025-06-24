@@ -2,7 +2,7 @@ import About from "../About";
 import ContentContainer from "../../components/ContentContainer";
 import { data as experienceData } from "../../contents/experience";
 import { data as projectData } from "../../contents/project";
-import { data as contactData } from "../../contents/project";
+import { data as contactData } from "../../contents/contact";
 import Footer from "../Footer";
 
 interface RightSectionProps {
