@@ -7,7 +7,7 @@ const FormattedDate: React.FC<FormattedDateProps> = ({children, isHighlight}) =>
     if (!children) return null;
     return (
         <div>
-            <span className={`font-bold text-sm text-primaryContent ${isHighlight ? "text-primaryTitle" : ""}`}>
+            <span className={`font-bold text-sm text-mainText ${isHighlight ? "text-mainTextHover" : ""}`}>
                 {children}
             </span>
         </div>

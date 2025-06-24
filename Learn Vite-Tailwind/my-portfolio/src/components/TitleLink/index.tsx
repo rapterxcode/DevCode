@@ -8,7 +8,7 @@ const TitleLink: React.FC<TitleLinkProps> = ({isHighlight, title, link}) => {
     
     if (!link) {
         return (
-            <div className={`text-primaryTitle text-1xl font-medium ${isHighlight ? "text-primaryTitleHover" : ""}`}>
+            <div className={`text-mainText text-1xl font-medium ${isHighlight ? "text-mainTextHover" : ""}`}>
                 {title}
             </div>
         )
@@ -16,7 +16,7 @@ const TitleLink: React.FC<TitleLinkProps> = ({isHighlight, title, link}) => {
 
     return (
         <a href={link} target="_blank">
-        <div className={`text-primaryTitle text-1xl font-medium ${isHighlight ? "text-primaryTitleHover" : ""}`}>
+        <div className={`text-mainText text-1xl font-medium ${isHighlight ? "text-mainTextHover" : ""}`}>
             {title}
         </div>
         </a>

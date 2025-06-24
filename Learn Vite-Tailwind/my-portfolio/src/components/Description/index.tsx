@@ -5,7 +5,7 @@ interface DescriptionProps {
 const Description: React.FC<DescriptionProps> = ({myDescription}) => {
     if (!myDescription) return null;
     return (
-        <div className="text-primaryContent text-sm">{myDescription}</div>
+        <div className="text-mainText text-sm">{myDescription}</div>
     )
 }
 

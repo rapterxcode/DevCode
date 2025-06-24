@@ -6,7 +6,7 @@ const Contact: React.FC = () => {
     return (        
         <div className='flex items-end gap-4 text-2xl'>
               <a href='https://www.google.com' target='_blank'>
-                <FontAwesomeIcon className='hover:scale-125 transition-all duration-300' icon={faLinkedin} />
+                <FontAwesomeIcon className='hover:scale-125 transition-all duration-300 ' icon={faLinkedin} />
               </a>
               <a href='https://www.google.com' target='_blank'>
                 <FontAwesomeIcon className='hover:scale-125 transition-all duration-300' icon={faGithub} />

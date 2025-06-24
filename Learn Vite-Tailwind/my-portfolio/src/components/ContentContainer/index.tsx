@@ -37,7 +37,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
     return (
         <div id={SECTION_ID} className="scroll-m-14">
             <div className="px-5">
-            <div className="text-primaryTitle text-2xl font-medium">{sectionTitle}</div>
+            <div className="text-mainText text-2xl font-medium">{sectionTitle}</div>
             </div>
             
             {/* Experience 1 */}
@@ -53,7 +53,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
                     }, index) => (
                     <div 
                     key={`${SECTION_ID}-${index}-${title.replace(" ", "-")}`}
-                    className={`grid grid-cols-[25%_75%] px-5 py-5 rounded-md transition-all duration-300 ${isMouseEnter[`${SECTION_ID}-${index}`] ? "bg-gray-300" : ""}`} 
+                    className={`grid grid-cols-[25%_75%] px-5 py-5 rounded-md transition-all duration-300 ${isMouseEnter[`${SECTION_ID}-${index}`] ? "bg-mainContainerBgHover" : ""}`} 
                     onMouseEnter={() => setIsMouseEnter({[`${SECTION_ID}-${index}`]: true})} 
                     onMouseLeave={() => setIsMouseEnter({[`${SECTION_ID}-${index}`]: false})}>
                     <div>

@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ navBarItems, currentSection }) => {
     }
     //console.log("currentSection:",currentSection);
     return (
-        <div className='flex flex-col gap-3 font-semibold text-primaryContent mt-6'>
+        <div className='flex flex-col gap-3 font-semibold text-mainText mt-6'>
              {
               navBarItems.map((e, i) => (
                 <div key={`nav-${e.title}-${i}`}
@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ navBarItems, currentSection }) => {
                 className="cursor-pointer flex"
                 >
                   <FontAwesomeIcon 
-                  className={`mr-2  ${currentSection === e.sectionId ? "text-primaryTitle" : isMouseEnter[e.title] ? "text-primaryTitle" : "opacity-0"}`} icon={faArrowRight} 
+                  className={`mr-2  ${currentSection === e.sectionId ? "text-mainIconBg" : isMouseEnter[e.title] ? "text-mainIconBg" : "opacity-0"}`} icon={faArrowRight} 
                   />
                   <div className={`${currentSection === e.sectionId || isMouseEnter[e.title] ? "translate-x-2" : ""} transition-all duration-500`}>{e.title}</div>
                 </div>
