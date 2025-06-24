@@ -2,9 +2,10 @@ import About from "../About";
 import ContentContainer from "../../components/ContentContainer";
 import { data as experienceData } from "../../contents/experience";
 import { data as projectData } from "../../contents/project";
-import { data as contactData } from "../../contents/contact";
+import { data as certificationData } from "../../contents/certification";
+import { data as educationData } from "../../contents/education";
 import Footer from "../Footer";
-
+import ContactUs from "../ContactUs";
 interface RightSectionProps {
     onInit?: (sectionId: string) => void;
 }
@@ -15,6 +16,11 @@ const RightSection: React.FC<RightSectionProps> = ({ onInit }) => {
             <About
                 title="About"
                 onInit={onInit}
+            />
+            <ContentContainer 
+                onInit={onInit}
+                title="Education"
+                data={educationData}
             />
             <ContentContainer
                 onInit={onInit}
@@ -28,9 +34,10 @@ const RightSection: React.FC<RightSectionProps> = ({ onInit }) => {
             />
             <ContentContainer
                 onInit={onInit}
-                title="Contacts"
-                data={contactData}
+                title="Certification"
+                data={certificationData}
             />
+            <ContactUs />
             <Footer />
         </div>
     )

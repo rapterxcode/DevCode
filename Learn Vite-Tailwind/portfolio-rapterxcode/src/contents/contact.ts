@@ -1,20 +1,29 @@
 
 export const data = [
     {
-        title: "HQ - TechVision Solutions Inc.",
-        link: "https://www.google.com", // link to the company
+        title: "Web Linkedin",
+        link: "https://www.linkedin.com/in/pasit-chatcharoenkit-432933229/", // link to the company
+    },
+    {
+        title: "Web Github",
+        link: "https://github.com/rapterxcode", // link to the company
         description: [
-            "123 Main Street, Suite 100, San Francisco, CA 94105, United States",
-            
+            "",   
         ],
 
     },
     {
-        title: "Japan - TechVision Solutions Inc",
-        link: "https://www.google.com", // link to the company
+        title: "Email",
         description: [
-            "456 Innovation Drive, Floor 15, Seattle, WA 98101, United States",
-            
+            "phonepasit9@gmail.com",
+            "pasit.working@gmail.com" 
+        ],
+
+    },
+    {
+        title: "Line",
+        description: [
+            "ID : phonegtracing", 
         ],
 
     },

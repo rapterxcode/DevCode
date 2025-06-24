@@ -1,51 +1,93 @@
-import pic1 from "../assets/pic1.png";
+//import pic1 from "../assets/pic1.png";
 export const data = [
     {
-        date: "2022-2023",
-        title: "Senior Infrastructure Engineer",
-        link: "https://www.google.com", // link to the company
+        date: "November 2020 - June 2025",
+        title: "Senior System Software Engineer and Network Engineer",
+        link: "https://www.lsiam.com", // link to the company
         description: [
-            "As a Senior Infrastructure Engineer, I designed and implemented scalable cloud infrastructure solutions, led system architecture decisions, and optimized deployment processes. Managed mission-critical systems while mentoring junior engineers and establishing best practices for infrastructure as code.",
-            "As a Senior Infrastructure Engineer, I designed and implemented scalable cloud infrastructure solutions, led system architecture decisions, and optimized deployment processes. Managed mission-critical systems while mentoring junior engineers and establishing best practices for infrastructure as code.",
+            "- Design and Implementation HCI solution.",
+            "- Design and Implementation Storage solution Dell,Huawei.",
+            "- Install and Config Router Switch Routing Switch Cisco , Huwei , San Switch Huawei , Dell Switch , Routing Route-Static , Route-OSPF , Route-BGP",
+            "- Remote support client Troubleshooting Server And Storage All Vendor.",
+            "- Installation and Configuration VMware ESXi, vSphere , vCenter ,VSAN ,NSX-T Data Center 3.1 , 3.2 NSX Manager , Edge Node",
+            "- Installation and Configuration Proxmox , Create Cluster , Backup ,Network Config link aggregation, Every Function.",
+            "- Installation and Configuration Windows Server 2003 , 2012 ,2016 ,2019 ,2022 ,Linux Ubuntu Server Desktop, SUSE Linux , Debien Linux , CentOS",
+            "- Hardening SUSE Linux , Ubuntu Server , CentOS , Debien Linux Red Hat",
+            "- Presale Server and Storage All model.",
+            "- Install Tranmission Device DWDM Huawei OSN9800 UPS , M24",
+            "- Install and Configuration Software Contoll Tranmisson NCE-T , NCE-IP , ISPA",
+            "- Install and Configuration Docker , Docker Compose , Docker Swarm , Docker Machine , Docker Desktop",
+            "- Install and Configuration Kubernetes , Kubernetes Dashboard , Kubernetes Helm , Kubernetes Kubectl",
+            "- Dev Shell Script, Batch Script",
+
         ],
         tech: [
-            ["React", "Vite", "Tailwind", "TypeScript", "JavaScript"],
-            ["NodeJs", "Express", "MongoDB", "MySQL", "PostgreSQL","FastAPI" , "Go API"],
-            ["Docker", "Kubernetes", "AWS", "Azure", "GCP"],
+            ["VMware ESXi", "vSphere", "vCenter", "VSAN", "NSX-T Data Center", "NSX Manager", "Edge Node", "Proxmox"],
+            ["Windows Server 2003/2012/2016/2019/2022", "Linux Ubuntu", "SUSE Linux", "CentOS", "Debian Linux", "Red Hat"],
+            ["DWDM", "Huawei OSN9800", "UPS", "M24", "NCE-T", "NCE-IP", "ISPA"],
+            ["HCI Solutions", "Dell Storage", "Huawei Storage", "Cisco Router/Switch", "Huawei Router/Switch", "BGP", "OSPF", "Route-Static"],
+            ["Docker", "Docker Compose", "Docker Swarm", "Docker Machine", "Docker Desktop"],
+            ["Kubernetes", "Kubernetes Dashboard", "Kubernetes Helm", "Kubernetes Kubectl"],
+            ["Shell Scripting", "Batch Scripting"]
             
         ],
-        picture: pic1,
-        titlePicture: "Infra",
+
     },
     {
-        date: "2019-2020",
-        title: "Backend Developer",
-        link: "https://www.google.com", // link to the company
+        date: "Augest 2022 - December 2022",
+        title: "Backend DevOps",
+        link: "https://www.lsiam.com", // link to the company
         description: [
-            "As a Senior Infrastructure Engineer, I designed and implemented scalable cloud infrastructure solutions, led system architecture decisions, and optimized deployment processes. Managed mission-critical systems while mentoring junior engineers and establishing best practices for infrastructure as code.",
-            "As a Senior Infrastructure Engineer, I designed and implemented scalable cloud infrastructure solutions, led system architecture decisions, and optimized deployment processes. Managed mission-critical systems while mentoring junior engineers and establishing best practices for infrastructure as code.",
+            "- Install and Config Ubuntu Server , Other Linux",
+            "- Install and Config Docker Kubernetes Nginx Portainer",
+            "- Coding REST API  Config NodeJs , Express , FastAPI , Go API",
+            "- Install and Config MySQL , PostgreSQL , MongoDB",
+            "- Install and Config AWS , Azure , GCP",
+            "- Install and Config Docker , Kubernetes , Nginx , Portainer ,Prometheus , Grafana",
+            "- Knowledge Java , php, Html5 , CSS , Javascript , React , NodeJs , Express , FastAPI , Go API",
         ],
         tech: [
-            ["NodeJs", "Express", "MongoDB", "MySQL", "PostgreSQL","FastAPI" , "Go API"],
-            ["Docker", "Kubernetes", "AWS", "Azure", "GCP"],
+            ["NodeJs", "Express", "FastAPI", "Go API"],
+            ["MongoDB", "MySQL", "PostgreSQL"],
+            ["Docker", "Kubernetes", "Nginx", "Portainer", "Prometheus", "Grafana"],
+            ["AWS", "Azure", "GCP"],
+            ["Java", "PHP", "HTML5", "CSS", "JavaScript", "React"]
             
         ],
-        picture: pic1,
-        titlePicture: "Infra",
+
     },
     {
-        date: "2009-2010",
+        date: "July 2020 - October 2020",
         title: "Hosting Support", // link to the company
         description: [
-            "Specialized in VPS and dedicated server management, providing enterprise-grade web hosting solutions for clients. Configured and optimized Apache/Nginx servers, implemented SSL certificates for secure connections, and managed DNS configurations. Maintained high-performance dedicated servers with custom configurations, automated backups, and proactive monitoring. Handled server security, including firewall setup, DDoS protection, and regular security audits."
-            ,"Expertise in managing cPanel/WHM environments, implementing server hardening practices, and providing 24/7 technical support for mission-critical hosting infrastructure. Successfully migrated and scaled hosting environments based on client requirements."
+            "- Support Customer - Setup VPS (Windows, Linux) , Cloud Email , Plesk , Directadmin",
+            "- Troubleshooting about VPS, Cloud Email ,Plesk and Directadmin , DNS , Domain Name",
+            "- Register and Renew Domain Name (GODady) , Generate and Renew SSL Certificate",
+            "- Call and reply Email - Server and Network Monitoring"
+
         ],
         tech: [
-            ["NodeJs", "Express", "MongoDB", "MySQL", "PostgreSQL","FastAPI" , "Go API"],
-            ["Docker", "Kubernetes", "AWS", "Azure", "GCP"],
+            ["Windows Server", "Linux", "VPS", "Cloud Email", "Plesk", "Directadmin"],
+            ["DNS", "Domain Name", "SSL Certificate", "Server Monitoring", "Network Monitoring"],
             
         ],
-        picture: pic1,
-        titlePicture: "Infra",
+
+    },
+    {
+        date: "January 2020 - May 2020",
+        title: "Systems Admin", // link to the company
+        description: [
+            "- Ensure staff can access to the Private System.",
+            "- Detect and handle issue causing or Server down.",
+            "- Install and Config Server Gateway , DHCP , VOIP , Elastic Asterisk , VMware ESXi",
+            "- Server Monitoring"
+
+        ],
+        tech: [
+            ["Windows Server", "Linux", "Server Gateway", "DHCP", "VOIP", "Elastic Asterisk", "VMware ESXi"],
+            ["Server Monitoring", "Network Monitoring", "System Administration"]
+            
+        ],
+
     },
 ]

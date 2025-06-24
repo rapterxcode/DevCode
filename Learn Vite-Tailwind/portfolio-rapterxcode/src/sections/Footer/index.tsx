@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
     return (
         <div className="mb-2">
             <div className="flex justify-end text-mainText">
-                <span><FontAwesomeIcon icon={faCopyright} /> 2025 All rights reserved </span>
+                <span><FontAwesomeIcon icon={faCopyright} /> Deverlop by Phone RapterXCode 2025 Deploy React Tailwind All rights reserved </span>
             </div>
         </div>
     )

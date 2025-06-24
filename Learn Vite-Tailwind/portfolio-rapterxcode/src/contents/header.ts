@@ -1,5 +1,5 @@
 import fileResume from "../assets/Pasit Chatcharoenkit-Resume-Update-18062568.pdf"
-import pic1 from "../assets/photo-1554629947-334ff61d85dc.avif"
+import phonethubnail from "../assets/phonepic.jpg"
 export const data = {
     title: "Pasit Chatcharoenkit",
     position: "Full Stack Developer , DevOps Engineer , Backend Developer , Senior Infrastructure Engineer , System Engineer - Between Job",
@@ -10,5 +10,5 @@ export const data = {
     github: "https://github.com/pasit-chatcharoenkit",
     facebook: "https://www.facebook.com/phonerapterx",
     email: "phonepasit9@gmail.com",
-    thumbnail: pic1,
+    thumbnail: phonethubnail,
 }

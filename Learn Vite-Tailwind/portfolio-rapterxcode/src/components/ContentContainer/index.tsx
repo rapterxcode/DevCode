@@ -53,14 +53,14 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
                     }, index) => (
                     <div 
                     key={`${SECTION_ID}-${index}-${title.replace(" ", "-")}`}
-                    className={`grid grid-cols-[25%_75%] px-5 py-5 rounded-md transition-all duration-300 ${isMouseEnter[`${SECTION_ID}-${index}`] ? "bg-mainContainerBgHover" : ""}`} 
+                    className={`grid grid-cols-[30%_70%] gap-x-5 px-5 py-5 rounded-md transition-all duration-300 ${isMouseEnter[`${SECTION_ID}-${index}`] ? "bg-mainContainerBgHover" : ""}`} 
                     onMouseEnter={() => setIsMouseEnter({[`${SECTION_ID}-${index}`]: true})} 
                     onMouseLeave={() => setIsMouseEnter({[`${SECTION_ID}-${index}`]: false})}>
                     <div>
                         <FormattedDate isHighlight={isMouseEnter[`${SECTION_ID}-${index}`]}>{date}</FormattedDate>
                         <Picture picture={picture} title={titlePicture} />
                     </div>
-                    <div className="grid gap-y-5">
+                    <div className="grid gap-y-2">
                         <TitleLink isHighlight={isMouseEnter[`${SECTION_ID}-${index}`]} title={title} link={link} />
                         {
                             description.map((e: string, i: number) => (
