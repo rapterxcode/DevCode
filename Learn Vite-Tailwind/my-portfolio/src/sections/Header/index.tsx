@@ -1,11 +1,11 @@
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { data } from "../../contents/header";
-import pic1 from "../../assets/photo-1554629947-334ff61d85dc.avif";
+
 const Header: React.FC = () => {
     return (
         <div className='flex flex-col gap-2'>
-            <div className='flex justify-center mx-auto mb-10'><img className="object-cover object-center rounded-full w-56 h-56 border-2 border-mainContainerBg " src={pic1} alt="image description"/></div>
+            <div className='flex justify-center mx-auto mb-10'><img className="object-cover object-center rounded-full w-56 h-56 border-2 border-mainContainerBg " src={data.thumbnail} alt="image description"/></div>
               <div className='font-bold text-mainText text-4xl'>{data.title}</div>
               <div className='font-semibold text-mainText'>{data.position}</div>
               
