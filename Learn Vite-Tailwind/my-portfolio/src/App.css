@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primaryTitle: #16423C;
+  --color-primaryContent: #000;
+  --color-primarySubcontent: #C4DAD2;
+  --color-primaryBase: #E9EFEC;
+  --color-primaryBg: #16423C;
+  --color-primaryBgHover: #fff;
+  --color-primaryContentHover: #fff;  
+  --color-primaryTitleHover: #16423C
+  --color-primarySubcontentHover: #16423C
+}
+
