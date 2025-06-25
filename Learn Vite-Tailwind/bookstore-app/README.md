@@ -2,6 +2,94 @@
 
 แอปพลิเคชัน BookHaven ถูกแบ่งออกเป็นส่วนต่างๆ เพื่อให้ง่ายต่อการดูแลและพัฒนาต่อ
 
+## 🚀 การติดตั้งและรันโปรเจค
+
+### Prerequisites
+- Node.js (เวอร์ชัน 18 หรือใหม่กว่า)
+- npm หรือ yarn
+
+### การติดตั้ง (Installation)
+
+1. **Clone โปรเจค**
+```bash
+git clone <repository-url>
+cd bookstore-app
+```
+
+2. **ติดตั้ง Dependencies**
+```bash
+npm install
+# หรือ
+yarn install
+```
+
+### การรันโปรเจค (Development)
+
+```bash
+npm run dev
+# หรือ
+yarn dev
+```
+
+แอปจะรันที่ `http://localhost:5173` (หรือพอร์ตอื่นที่ Vite กำหนด)
+
+### การ Build โปรเจค (Production)
+
+```bash
+npm run build
+# หรือ
+yarn build
+```
+
+ไฟล์ที่ build แล้วจะอยู่ในโฟลเดอร์ `dist/`
+
+### การ Preview Production Build
+
+```bash
+npm run preview
+# หรือ
+yarn preview
+```
+
+### การ Lint โค้ด
+
+```bash
+npm run lint
+# หรือ
+yarn lint
+```
+
+## 📦 Dependencies หลัก
+
+### Core Dependencies
+- **React** `^19.1.0` - UI Library
+- **React DOM** `^19.1.0` - React DOM rendering
+- **React Router DOM** `^7.6.2` - Client-side routing
+
+### Build Tools & Development
+- **Vite** `^6.3.5` - Build tool และ Development server
+- **TypeScript** `~5.8.3` - Type safety
+- **@vitejs/plugin-react** `^4.4.1` - React plugin for Vite
+
+### Styling & UI
+- **Tailwind CSS** `^3.4.17` - Utility-first CSS framework
+- **Material Tailwind** `^2.1.10` - UI Components library
+- **@material-tailwind/html** `^3.0.0-beta.7` - Material Tailwind HTML components
+- **PostCSS** `^8.5.6` - CSS processing
+- **Autoprefixer** `^10.4.21` - CSS vendor prefixing
+
+### Icons & Assets
+- **Iconoir React** `^7.11.0` - Icon library
+
+### Development Dependencies
+- **ESLint** `^9.25.0` - Code linting
+- **@types/react** `^19.1.2` - React TypeScript definitions
+- **@types/react-dom** `^19.1.2` - React DOM TypeScript definitions
+- **vite-plugin-checker** `^0.9.3` - Type checking plugin
+
+### Node.js Version
+- **Node.js** - เวอร์ชัน 18 หรือใหม่กว่า (แนะนำ Node.js 18+)
+
 ## 📁 โครงสร้างโฟลเดอร์
 
 ```
