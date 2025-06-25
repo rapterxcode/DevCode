@@ -1,54 +1,115 @@
-# React + TypeScript + Vite
+# BookHaven App Structure
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+แอปพลิเคชัน BookHaven ถูกแบ่งออกเป็นส่วนต่างๆ เพื่อให้ง่ายต่อการดูแลและพัฒนาต่อ
 
-Currently, two official plugins are available:
+## 📁 โครงสร้างโฟลเดอร์
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+├── components/          # Components ที่ใช้ซ้ำได้
+│   ├── Header.tsx      # ส่วนหัวเว็บไซต์
+│   ├── BookCard.tsx    # การ์ดหนังสือแบบปกติ
+│   ├── FeaturedBookCard.tsx  # การ์ดหนังสือแบบพิเศษ
+│   ├── Footer.tsx      # ส่วนท้ายเว็บไซต์
+│   └── index.ts        # Export ทั้งหมด
+├── sections/           # ส่วนต่างๆ ของหน้าเว็บ
+│   ├── SearchSection.tsx      # ส่วนค้นหา
+│   ├── HeroSection.tsx        # ส่วนหลัก (Hero)
+│   ├── FeaturedBooksSection.tsx  # ส่วนหนังสือแนะนำ
+│   ├── NewReleasesSection.tsx    # ส่วนหนังสือใหม่
+│   ├── CategoriesSection.tsx     # ส่วนหมวดหมู่
+│   ├── WhyChooseSection.tsx      # ส่วนเหตุผลเลือกเรา
+│   ├── CTASection.tsx           # ส่วน Call to Action
+│   └── index.ts                 # Export ทั้งหมด
+├── data/               # ข้อมูล Mock
+│   ├── featuredBooks.ts
+│   ├── newReleases.ts
+│   ├── bookCategories.ts
+│   ├── heroSlides.ts
+│   ├── dropdownMenus.ts
+│   └── index.ts
+├── pages/              # หน้าต่างๆ
+│   └── Home.tsx        # หน้าหลัก
+└── README.md           # ไฟล์นี้
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧩 Components
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Header.tsx
+- ส่วนหัวเว็บไซต์พร้อมเมนูนำทาง
+- รองรับการแสดงผลบนมือถือ
+- มี dropdown menus สำหรับการนำทาง
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### BookCard.tsx
+- การ์ดแสดงหนังสือแบบปกติ
+- แสดงรูปภาพ, ชื่อ, ผู้แต่ง, ราคา
+- มีปุ่ม Add to Cart และ Wishlist
+
+### FeaturedBookCard.tsx
+- การ์ดหนังสือแบบพิเศษ (แนวนอน)
+- แสดงรายละเอียดเพิ่มเติม
+- เหมาะสำหรับหนังสือแนะนำ
+
+### Footer.tsx
+- ส่วนท้ายเว็บไซต์
+- ลิงก์ต่างๆ และข้อมูลติดต่อ
+
+## 📄 Sections
+
+### SearchSection.tsx
+- ส่วนค้นหาหนังสือ
+- มีปุ่มค้นหาด่วนตามหมวดหมู่
+
+### HeroSection.tsx
+- ส่วนหลักของหน้าเว็บ
+- Carousel แสดงข้อความหลัก
+- มีปุ่ม Call to Action
+
+### FeaturedBooksSection.tsx
+- แสดงหนังสือแนะนำ
+- ใช้ FeaturedBookCard component
+
+### NewReleasesSection.tsx
+- แสดงหนังสือใหม่
+- ใช้ BookCard component
+
+### CategoriesSection.tsx
+- แสดงหมวดหมู่หนังสือ
+- มีไอคอนและสีสันสวยงาม
+
+### WhyChooseSection.tsx
+- แสดงเหตุผลเลือก BookHaven
+- มีไอคอนและคำอธิบาย
+
+### CTASection.tsx
+- ส่วน Call to Action
+- ชวนให้สมัครสมาชิก
+
+## 🎯 ประโยชน์ของการแยกส่วน
+
+1. **ง่ายต่อการดูแล**: แต่ละส่วนมีหน้าที่ชัดเจน
+2. **นำกลับมาใช้ได้**: Components สามารถใช้ซ้ำได้
+3. **แก้ไขง่าย**: แก้ไขส่วนใดส่วนหนึ่งโดยไม่กระทบส่วนอื่น
+4. **ทำงานเป็นทีม**: แต่ละคนสามารถทำงานคนละส่วนได้
+5. **ทดสอบง่าย**: ทดสอบแต่ละส่วนแยกกันได้
+
+## 📝 วิธีการใช้งาน
+
+```typescript
+// Import components
+import { Header, BookCard, Footer } from '../components';
+
+// Import sections
+import { SearchSection, HeroSection } from '../sections';
+
+// Import data
+import { featuredBooks, newReleases } from '../data';
 ```
+
+## 🔧 การเพิ่มส่วนใหม่
+
+1. สร้างไฟล์ใหม่ใน `components/` หรือ `sections/`
+2. Export จาก `index.ts`
+3. Import และใช้งานใน `Home.tsx`
+
+โครงสร้างนี้ทำให้โค้ดเป็นระเบียบและง่ายต่อการพัฒนาต่อ! 🚀 
