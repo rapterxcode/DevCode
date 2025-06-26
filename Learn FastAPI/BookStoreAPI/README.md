@@ -324,18 +324,62 @@ def test_create_book():
 ## 📈 Scaling & Production
 
 ### 🐳 Docker Deployment
-```dockerfile
-FROM python:3.9-slim
 
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+#### Quick Start with Docker
 
-COPY . .
-EXPOSE 8000
+**Development Mode:**
+```bash
+# Run with hot reload for development
+docker-compose -f docker-compose.dev.yml up --build
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Access API at http://localhost:8000
 ```
+
+**Production Mode:**
+```bash
+# Full production stack with PostgreSQL, Redis, Nginx
+docker-compose up -d --build
+
+# Access API at http://localhost (port 80)
+# Grafana dashboard at http://localhost:3000
+# Prometheus at http://localhost:9090
+```
+
+#### Available Docker Configurations
+
+| File | Purpose | Services |
+|------|---------|----------|
+| `docker-compose.dev.yml` | Development | API only with SQLite |
+| `docker-compose.yml` | Production | API + PostgreSQL + Redis + Nginx + Monitoring |
+
+#### Docker Commands
+
+```bash
+# Build and run development
+docker-compose -f docker-compose.dev.yml up --build
+
+# Run production stack
+docker-compose up -d
+
+# View logs
+docker-compose logs -f bookstore-api
+
+# Stop services
+docker-compose down
+
+# Remove volumes (caution: deletes data)
+docker-compose down -v
+```
+
+#### Production Features
+
+- **Load Balancer**: Nginx for reverse proxy and load balancing
+- **Database**: PostgreSQL for production data storage
+- **Caching**: Redis for improved performance
+- **Monitoring**: Prometheus + Grafana for metrics and dashboards
+- **Health Checks**: Built-in container health monitoring
+- **Security**: Non-root user in containers
+- **Persistence**: Data volumes for database and cache
 
 ### 🌐 Production Database
 ```python

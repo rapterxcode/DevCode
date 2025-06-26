@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Development FastAPI Application
+  bookstore-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bookstore-api-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=sqlite:///./data/bookstore.db
+      - DEBUG=True
+    volumes:
+      - bookstore_data_dev:/app/data
+      - .:/app  # Mount entire project for hot reload
+    restart: unless-stopped
+    networks:
+      - bookstore-network-dev
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+volumes:
+  bookstore_data_dev:
+    driver: local
+
+networks:
+  bookstore-network-dev:
+    driver: bridge
