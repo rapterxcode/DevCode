@@ -1,0 +1,300 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Dashboard Overview</h1>
+    <div class="text-muted">
+        <i class="fas fa-calendar-alt me-2"></i><span id="dashboard-date"></span>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Customers</h6>
+                        <h2 class="text-white mb-0">{{ total_customers }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card sales h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Products</h6>
+                        <h2 class="text-white mb-0">{{ total_products }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-boxes fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card purchases h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Vendors</h6>
+                        <h2 class="text-white mb-0">{{ total_vendors }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-building fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card stat-card hr h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Employees</h6>
+                        <h2 class="text-white mb-0">{{ total_employees }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-user-tie fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Summary -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Sales Summary</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="text-success">฿<span id="total-sales">{{ "{:,.2f}".format(total_sales or 0) }}</span></h3>
+                <p class="text-muted mb-0">Total Sales Revenue</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Purchase Summary</h5>
+            </div>
+            <div class="card-body">
+                <h3 class="text-warning">฿<span id="total-purchases">{{ "{:,.2f}".format(total_purchases or 0) }}</span></h3>
+                <p class="text-muted mb-0">Total Purchase Costs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Low Stock Alerts -->
+{% if low_stock_products %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Low Stock Alerts</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>Current Stock</th>
+                                <th>Reorder Level</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in low_stock_products %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.sku }}</td>
+                                <td><span class="badge bg-danger">{{ product.stock_quantity }}</span></td>
+                                <td>{{ product.reorder_level }}</td>
+                                <td>
+                                    <a href="{{ url_for('add_purchase_order') }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-plus me-1"></i>Reorder
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recent Activities -->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Recent Sales Orders</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_sales %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in recent_sales %}
+                            <tr>
+                                <td>{{ order.so_number }}</td>
+                                <td>{{ order.customer.name }}</td>
+                                <td>฿{{ "{:,.2f}".format(order.total_amount or 0) }}</td>
+                                <td><span class="badge bg-warning">{{ order.status.title() }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('sales') }}" class="btn btn-outline-primary btn-sm">View All Sales</a>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No recent sales orders</p>
+                <div class="text-center">
+                    <a href="{{ url_for('add_sales_order') }}" class="btn btn-primary btn-sm">Create Sales Order</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-truck me-2"></i>Recent Purchase Orders</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_purchases %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Vendor</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in recent_purchases %}
+                            <tr>
+                                <td>{{ order.po_number }}</td>
+                                <td>{{ order.vendor.name }}</td>
+                                <td>฿{{ "{:,.2f}".format(order.total_amount or 0) }}</td>
+                                <td><span class="badge bg-info">{{ order.status.title() }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('purchases') }}" class="btn btn-outline-primary btn-sm">View All Purchases</a>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No recent purchase orders</p>
+                <div class="text-center">
+                    <a href="{{ url_for('add_purchase_order') }}" class="btn btn-primary btn-sm">Create Purchase Order</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('add_sales_order') }}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-plus me-2"></i>New Sale
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('add_purchase_order') }}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-plus me-2"></i>New Purchase
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('add_inventory_product') }}" class="btn btn-outline-info w-100">
+                            <i class="fas fa-plus me-2"></i>Add Product
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url_for('add_customer') }}" class="btn btn-outline-warning w-100">
+                            <i class="fas fa-plus me-2"></i>Add Customer
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Update dashboard date
+    document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric'
+        };
+        document.getElementById('dashboard-date').textContent = now.toLocaleDateString('en-US', options);
+        
+        // Format numbers with Thai locale
+        const totalSalesElement = document.getElementById('total-sales');
+        const totalPurchasesElement = document.getElementById('total-purchases');
+        
+        if (totalSalesElement) {
+            const value = parseFloat(totalSalesElement.textContent);
+            totalSalesElement.textContent = value.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+        
+        if (totalPurchasesElement) {
+            const value = parseFloat(totalPurchasesElement.textContent);
+            totalPurchasesElement.textContent = value.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+    });
+</script>
+{% endblock %}

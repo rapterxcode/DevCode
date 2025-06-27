@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}Follow-up Management - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Follow-up Management</h1>
+    <div>
+        <button class="btn btn-outline-primary me-2">
+            <i class="fas fa-plus me-2"></i>Add Follow Up
+        </button>
+        <button class="btn btn-outline-info">
+            <i class="fas fa-filter me-2"></i>Filter Data
+        </button>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-users me-2"></i>Customer Follow-ups</h5>
+            </div>
+            <div class="card-body">
+                {% if customer_contacts %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Type</th>
+                                <th>Subject</th>
+                                <th>Follow-up Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in customer_contacts %}
+                            <tr>
+                                <td>{{ contact.customer.name[:15] }}...</td>
+                                <td>
+                                    {% if contact.contact_type == 'call' %}
+                                        <span class="badge bg-info">Call</span>
+                                    {% elif contact.contact_type == 'email' %}
+                                        <span class="badge bg-primary">Email</span>
+                                    {% elif contact.contact_type == 'meeting' %}
+                                        <span class="badge bg-success">Meeting</span>
+                                    {% elif contact.contact_type == 'note' %}
+                                        <span class="badge bg-secondary">Note</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ contact.subject[:20] }}...</td>
+                                <td>{{ contact.follow_up_date.strftime('%d/%m/%Y') if contact.follow_up_date else 'N/A' }}</td>
+                                <td>
+                                    {% if contact.status == 'open' %}
+                                        <span class="badge bg-warning">Open</span>
+                                    {% elif contact.status == 'closed' %}
+                                        <span class="badge bg-success">Closed</span>
+                                    {% elif contact.status == 'follow_up' %}
+                                        <span class="badge bg-danger">Follow-up</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">View</button>
+                                    <button class="btn btn-sm btn-outline-success">Edit</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No customer follow-ups found</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0"><i class="fas fa-building me-2"></i>Vendor Follow-ups</h5>
+            </div>
+            <div class="card-body">
+                {% if vendor_contacts %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>Type</th>
+                                <th>Subject</th>
+                                <th>Follow-up Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for contact in vendor_contacts %}
+                            <tr>
+                                <td>{{ contact.vendor.name[:15] }}...</td>
+                                <td>
+                                    {% if contact.contact_type == 'call' %}
+                                        <span class="badge bg-info">Call</span>
+                                    {% elif contact.contact_type == 'email' %}
+                                        <span class="badge bg-primary">Email</span>
+                                    {% elif contact.contact_type == 'meeting' %}
+                                        <span class="badge bg-success">Meeting</span>
+                                    {% elif contact.contact_type == 'note' %}
+                                        <span class="badge bg-secondary">Note</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ contact.subject[:20] }}...</td>
+                                <td>{{ contact.follow_up_date.strftime('%d/%m/%Y') if contact.follow_up_date else 'N/A' }}</td>
+                                <td>
+                                    {% if contact.status == 'open' %}
+                                        <span class="badge bg-warning">Open</span>
+                                    {% elif contact.status == 'closed' %}
+                                        <span class="badge bg-success">Closed</span>
+                                    {% elif contact.status == 'follow_up' %}
+                                        <span class="badge bg-danger">Follow-up</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">View</button>
+                                    <button class="btn btn-sm btn-outline-success">Edit</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No vendor follow-ups found</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-calendar me-2"></i>Follow-up Calendar</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">Follow-ups for this week</h6>
+                    <p class="mb-0">There are {{ (customer_contacts|length) + (vendor_contacts|length) }} follow-up items that need attention</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card border-danger">
+                            <div class="card-body text-center">
+                                <h3 class="text-danger">{{ customer_contacts|selectattr('status', 'equalto', 'follow_up')|list|length + vendor_contacts|selectattr('status', 'equalto', 'follow_up')|list|length }}</h3>
+                                <p class="text-muted mb-0">Need Follow-up</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-warning">
+                            <div class="card-body text-center">
+                                <h3 class="text-warning">{{ customer_contacts|selectattr('status', 'equalto', 'open')|list|length + vendor_contacts|selectattr('status', 'equalto', 'open')|list|length }}</h3>
+                                <p class="text-muted mb-0">In Progress</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-success">
+                            <div class="card-body text-center">
+                                <h3 class="text-success">{{ customer_contacts|selectattr('status', 'equalto', 'closed')|list|length + vendor_contacts|selectattr('status', 'equalto', 'closed')|list|length }}</h3>
+                                <p class="text-muted mb-0">Completed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

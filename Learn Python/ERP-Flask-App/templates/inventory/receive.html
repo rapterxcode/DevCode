@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory Receiving - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Inventory Receiving</h1>
+    <a href="{{ url_for('add_inventory_receive') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>New Receipt
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Receipt Number</th>
+                        <th>Supplier</th>
+                        <th>Receive Date</th>
+                        <th>Total Items</th>
+                        <th>Receiver</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receive in receives %}
+                    <tr>
+                        <td><code>{{ receive.receive_number }}</code></td>
+                        <td>{{ receive.supplier.name if receive.supplier else 'Direct' }}</td>
+                        <td>{{ receive.receive_date.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ receive.items|length if receive.items else 0 }}</td>
+                        <td>{{ receive.received_by or 'System' }}</td>
+                        <td>
+                            {% if receive.status == 'draft' %}
+                            <span class="badge bg-secondary">Draft</span>
+                            {% elif receive.status == 'received' %}
+                            <span class="badge bg-success">Received</span>
+                            {% else %}
+                            <span class="badge bg-info">Processing</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                            <button class="btn btn-sm btn-outline-info">Print</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not receives %}
+        <div class="text-center py-4">
+            <i class="fas fa-truck-loading fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No inventory receipts found</p>
+            <a href="{{ url_for('add_inventory_receive') }}" class="btn btn-primary">Create Inventory Receipt</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

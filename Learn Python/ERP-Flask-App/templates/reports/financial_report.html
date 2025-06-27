@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Report - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Financial Report</h1>
+    <div>
+        <button class="btn btn-outline-primary me-2">
+            <i class="fas fa-download me-2"></i>Export Excel
+        </button>
+        <button class="btn btn-outline-success">
+            <i class="fas fa-print me-2"></i>Print Report
+        </button>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card h-100">
+            <div class="card-body text-center">
+                <h3 class="text-white">฿{{ "{:,.0f}".format(total_revenue) }}</h3>
+                <p class="text-white-50 mb-0">Total Revenue</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card sales h-100">
+            <div class="card-body text-center">
+                <h3 class="text-white">฿{{ "{:,.0f}".format(total_expenses) }}</h3>
+                <p class="text-white-50 mb-0">Total Expenses</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card {% if net_profit >= 0 %}purchases{% else %}hr{% endif %} h-100">
+            <div class="card-body text-center">
+                <h3 class="text-white">
+                    {% if net_profit >= 0 %}+{% endif %}฿{{ "{:,.0f}".format(net_profit) }}
+                </h3>
+                <p class="text-white-50 mb-0">{% if net_profit >= 0 %}Net Profit{% else %}Net Loss{% endif %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Revenue & Expense Trends</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="financialTrendChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-pie-chart me-2"></i>Revenue Distribution</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="revenuePieChart" width="300" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-table me-2"></i>Monthly Performance Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th class="text-end">Revenue</th>
+                                <th class="text-end">COGS</th>
+                                <th class="text-end">Gross Profit</th>
+                                <th class="text-end">Expenses</th>
+                                <th class="text-end">Net Profit</th>
+                                <th class="text-end">Profit Margin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน'] %}
+                            {% for month in months %}
+                            {% set monthly_revenue = (total_revenue / 6) * (1 + (loop.index0 * 0.1)) %}
+                            {% set monthly_cogs = monthly_revenue * 0.6 %}
+                            {% set monthly_gross = monthly_revenue - monthly_cogs %}
+                            {% set monthly_expenses = monthly_revenue * 0.25 %}
+                            {% set monthly_net = monthly_gross - monthly_expenses %}
+                            {% set profit_margin = (monthly_net / monthly_revenue * 100) if monthly_revenue > 0 else 0 %}
+                            <tr>
+                                <td>{{ month }}</td>
+                                <td class="text-end">฿{{ "{:,.0f}".format(monthly_revenue) }}</td>
+                                <td class="text-end">฿{{ "{:,.0f}".format(monthly_cogs) }}</td>
+                                <td class="text-end">฿{{ "{:,.0f}".format(monthly_gross) }}</td>
+                                <td class="text-end">฿{{ "{:,.0f}".format(monthly_expenses) }}</td>
+                                <td class="text-end {% if monthly_net >= 0 %}text-success{% else %}text-danger{% endif %}">฿{{ "{:,.0f}".format(monthly_net) }}</td>
+                                <td class="text-end {% if profit_margin >= 10 %}text-success{% elif profit_margin >= 5 %}text-info{% else %}text-warning{% endif %}">
+                                    {{ "{:.1f}".format(profit_margin) }}%
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="table-dark">
+                            <tr>
+                                <th>Total</th>
+                                <th class="text-end">฿{{ "{:,.0f}".format(total_revenue) }}</th>
+                                <th class="text-end">฿{{ "{:,.0f}".format(total_revenue * 0.6) }}</th>
+                                <th class="text-end">฿{{ "{:,.0f}".format(total_revenue * 0.4) }}</th>
+                                <th class="text-end">฿{{ "{:,.0f}".format(total_expenses) }}</th>
+                                <th class="text-end">฿{{ "{:,.0f}".format(net_profit) }}</th>
+                                <th class="text-end">{{ "{:.1f}".format((net_profit / total_revenue * 100) if total_revenue > 0 else 0) }}%</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Key Financial Ratios</h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <h5 class="{% if (net_profit / total_revenue * 100) >= 10 %}text-success{% elif (net_profit / total_revenue * 100) >= 5 %}text-info{% else %}text-warning{% endif %}">
+                            {{ "{:.1f}".format((net_profit / total_revenue * 100) if total_revenue > 0 else 0) }}%
+                        </h5>
+                        <small class="text-muted">Net Profit Margin</small>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h5 class="text-info">{{ "{:.1f}".format(((total_revenue * 0.4) / total_revenue * 100) if total_revenue > 0 else 0) }}%</h5>
+                        <small class="text-muted">Gross Profit Margin</small>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h5 class="text-primary">{{ "{:.2f}".format((total_revenue / 6) if total_revenue > 0 else 0) }}</h5>
+                        <small class="text-muted">Revenue Growth Rate</small>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h5 class="text-warning">{{ "{:.1f}".format((total_expenses / total_revenue * 100) if total_revenue > 0 else 0) }}%</h5>
+                        <small class="text-muted">Expense Ratio</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Analysis & Recommendations</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-{% if net_profit >= 0 %}success{% else %}danger{% endif %}">
+                    <h6 class="alert-heading">Performance Summary</h6>
+                    {% if net_profit >= 0 %}
+                        <p>Company has good performance with net profit of ฿{{ "{:,.0f}".format(net_profit) }}</p>
+                    {% else %}
+                        <p>Company has losses of ฿{{ "{:,.0f}".format(-net_profit) }} - needs efficiency improvement</p>
+                    {% endif %}
+                </div>
+                
+                <h6>Recommendations:</h6>
+                <ul class="mb-0">
+                    {% set profit_margin = (net_profit / total_revenue * 100) if total_revenue > 0 else 0 %}
+                    {% if profit_margin >= 15 %}
+                        <li class="text-success">Excellent performance - consider business expansion</li>
+                        <li class="text-success">Consider investing in new products development</li>
+                    {% elif profit_margin >= 10 %}
+                        <li class="text-info">Good performance - maintain efficiency</li>
+                        <li class="text-info">Find ways to increase additional revenue</li>
+                    {% elif profit_margin >= 5 %}
+                        <li class="text-warning">Should reduce costs and increase efficiency</li>
+                        <li class="text-warning">Improve work processes</li>
+                    {% else %}
+                        <li class="text-danger">Urgent improvement needed</li>
+                        <li class="text-danger">Consider reducing unnecessary expenses</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Financial Trend Chart
+    const trendCtx = document.getElementById('financialTrendChart').getContext('2d');
+    const financialTrendChart = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+            datasets: [{
+                label: 'Revenue',
+                data: [
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.0) }},
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.1) }},
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.2) }},
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.1) }},
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.3) }},
+                    {{ "{:,.0f}".format((total_revenue / 6) * 1.4) }}
+                ],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                tension: 0.1
+            }, {
+                label: 'Expenses',
+                data: [
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.0) }},
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.05) }},
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.1) }},
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.0) }},
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.15) }},
+                    {{ "{:,.0f}".format((total_expenses / 6) * 1.2) }}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Monthly Financial Trends'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '฿' + value.toLocaleString('th-TH');
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Revenue Pie Chart
+    const pieCtx = document.getElementById('revenuePieChart').getContext('2d');
+    const revenuePieChart = new Chart(pieCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Sales Revenue', 'Other Income', 'Investment Income'],
+            datasets: [{
+                data: [{{ total_revenue * 0.85 }}, {{ total_revenue * 0.1 }}, {{ total_revenue * 0.05 }}],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                title: {
+                    display: true,
+                    text: 'Revenue Distribution'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

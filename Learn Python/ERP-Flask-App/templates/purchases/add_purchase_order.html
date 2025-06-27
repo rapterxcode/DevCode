@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Create Purchase Order - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Create Purchase Order</h1>
+    <a href="{{ url_for('purchases') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Purchases
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="vendor_id" class="form-label">Vendor *</label>
+                                <select class="form-select" id="vendor_id" name="vendor_id" required>
+                                    <option value="">Select Vendor</option>
+                                    {% for vendor in vendors %}
+                                    <option value="{{ vendor.id }}">{{ vendor.name }} ({{ vendor.email }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="expected_date" class="form-label">Expected Delivery Date</label>
+                                <input type="date" class="form-control" id="expected_date" name="expected_date">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5>Purchase Items</h5>
+                    <div id="purchase-items">
+                        <div class="row mb-3 purchase-item">
+                            <div class="col-md-5">
+                                <label class="form-label">Product</label>
+                                <select class="form-select" name="product_id" required>
+                                    <option value="">Select Product</option>
+                                    {% for product in products %}
+                                    <option value="{{ product.id }}">{{ product.name }} ({{ product.sku }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" min="1" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Unit Price</label>
+                                <input type="number" class="form-control" name="unit_price" step="0.01" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Subtotal</label>
+                                <input type="text" class="form-control subtotal" readonly>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-danger btn-sm d-block" onclick="removePurchaseItem(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-secondary" onclick="addPurchaseItem()">
+                            <i class="fas fa-plus me-2"></i>Add Item
+                        </button>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Purchase Summary</h6>
+                                    <div class="d-flex justify-content-between fw-bold">
+                                        <span>Total Amount:</span>
+                                        <span id="purchase-total">฿0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Create Purchase Order
+                        </button>
+                        <a href="{{ url_for('purchases') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function addPurchaseItem() {
+    const purchaseItems = document.getElementById('purchase-items');
+    const newItem = document.querySelector('.purchase-item').cloneNode(true);
+    newItem.querySelector('select[name="product_id"]').value = '';
+    newItem.querySelector('input[name="quantity"]').value = '';
+    newItem.querySelector('input[name="unit_price"]').value = '';
+    newItem.querySelector('.subtotal').value = '';
+    purchaseItems.appendChild(newItem);
+    attachEventListeners();
+}
+
+function removePurchaseItem(button) {
+    const purchaseItems = document.getElementById('purchase-items');
+    if (purchaseItems.children.length > 1) {
+        button.closest('.purchase-item').remove();
+        calculateTotal();
+    }
+}
+
+function attachEventListeners() {
+    document.querySelectorAll('input[name="quantity"], input[name="unit_price"]').forEach(element => {
+        element.addEventListener('change', calculateTotal);
+        element.addEventListener('input', calculateTotal);
+    });
+}
+
+function calculateTotal() {
+    let total = 0;
+    
+    document.querySelectorAll('.purchase-item').forEach(item => {
+        const quantity = parseFloat(item.querySelector('input[name="quantity"]').value) || 0;
+        const price = parseFloat(item.querySelector('input[name="unit_price"]').value) || 0;
+        const itemSubtotal = price * quantity;
+        
+        item.querySelector('.subtotal').value = '฿' + itemSubtotal.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        total += itemSubtotal;
+    });
+    
+    document.getElementById('purchase-total').textContent = '฿' + total.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    attachEventListeners();
+});
+</script>
+{% endblock %}

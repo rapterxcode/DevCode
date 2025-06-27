@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Departments - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Department Management</h1>
+    <a href="{{ url_for('add_department') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Add Department
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        {% if departments %}
+        <div class="row">
+            {% for department in departments %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ department.name }}</h5>
+                        <p class="card-text">{{ department.description or 'No description provided' }}</p>
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="fas fa-users me-1"></i>
+                                {{ department.employees|length }} employees
+                            </small>
+                        </div>
+                        {% if department.manager_id %}
+                        <div class="mb-2">
+                            <small class="text-muted">
+                                <i class="fas fa-user-tie me-1"></i>
+                                Manager assigned
+                            </small>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-outline-primary">Edit</button>
+                        <button class="btn btn-sm btn-outline-info">View Employees</button>
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-4">
+            <i class="fas fa-sitemap fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No departments found. <a href="{{ url_for('add_department') }}">Add your first department</a></p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

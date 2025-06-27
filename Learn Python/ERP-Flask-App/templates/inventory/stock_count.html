@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Stock Count - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Stock Count</h1>
+    <a href="{{ url_for('add_stock_count') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>New Count
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Count Number</th>
+                        <th>Count Date</th>
+                        <th>Count Type</th>
+                        <th>Counter</th>
+                        <th>Items</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for count in stock_counts %}
+                    <tr>
+                        <td><code>{{ count.count_number }}</code></td>
+                        <td>{{ count.count_date.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            {% if count.count_type == 'full' %}
+                            <span class="badge bg-primary">Full Count</span>
+                            {% elif count.count_type == 'cycle' %}
+                            <span class="badge bg-info">Cycle Count</span>
+                            {% else %}
+                            <span class="badge bg-warning">Spot Count</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ count.counted_by or 'System' }}</td>
+                        <td>{{ count.items|length if count.items else 0 }}</td>
+                        <td>
+                            {% if count.status == 'draft' %}
+                            <span class="badge bg-secondary">Draft</span>
+                            {% elif count.status == 'counting' %}
+                            <span class="badge bg-warning">Counting</span>
+                            {% elif count.status == 'completed' %}
+                            <span class="badge bg-info">Completed</span>
+                            {% else %}
+                            <span class="badge bg-success">Adjusted</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                            {% if count.status == 'completed' %}
+                            <button class="btn btn-sm btn-outline-warning">Adjust Stock</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not stock_counts %}
+        <div class="text-center py-4">
+            <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No stock counts found</p>
+            <a href="{{ url_for('add_stock_count') }}" class="btn btn-primary">Start Stock Count</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Payroll Management - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Payroll Management</h1>
+    <a href="#" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Calculate Payroll
+    </a>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3 class="text-white">{{ payrolls|selectattr('status', 'equalto', 'paid')|list|length }}</h3>
+                <p class="text-white-50 mb-0">Paid</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body text-center">
+                <h3 class="text-white">{{ payrolls|selectattr('status', 'equalto', 'pending')|list|length }}</h3>
+                <p class="text-white-50 mb-0">Pending</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3 class="text-white">{{ payrolls|selectattr('status', 'equalto', 'draft')|list|length }}</h3>
+                <p class="text-white-50 mb-0">Draft</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 class="text-white">${{ "{:,.2f}".format(payrolls|sum(attribute='net_salary') or 0) }}</h3>
+                <p class="text-white-50 mb-0">Total Payroll</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-money-bill me-2"></i>Payroll Records</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Position</th>
+                        <th>Pay Period</th>
+                        <th>Basic Salary</th>
+                        <th>Net Salary</th>
+                        <th>Status</th>
+                        <th>Pay Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payroll in payrolls %}
+                    <tr>
+                        <td>{{ payroll.employee.first_name }} {{ payroll.employee.last_name }}</td>
+                        <td>{{ payroll.employee.position }}</td>
+                        <td>{{ payroll.pay_period_start.strftime('%m/%Y') }} - {{ payroll.pay_period_end.strftime('%m/%Y') }}</td>
+                        <td>${{ "{:,.2f}".format(payroll.basic_salary or 0) }}</td>
+                        <td>${{ "{:,.2f}".format(payroll.net_salary or 0) }}</td>
+                        <td>
+                            {% if payroll.status == 'draft' %}
+                            <span class="badge bg-secondary">Draft</span>
+                            {% elif payroll.status == 'pending' %}
+                            <span class="badge bg-warning">Pending</span>
+                            {% elif payroll.status == 'paid' %}
+                            <span class="badge bg-success">Paid</span>
+                            {% else %}
+                            <span class="badge bg-info">Processing</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ payroll.pay_date.strftime('%Y-%m-%d') if payroll.pay_date else 'N/A' }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                            <button class="btn btn-sm btn-outline-info">Print</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not payrolls %}
+        <div class="text-center py-4">
+            <i class="fas fa-money-bill-wave fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No payroll data found</p>
+            <a href="#" class="btn btn-primary">Calculate Payroll</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

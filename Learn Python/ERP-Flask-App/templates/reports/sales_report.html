@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Sales Report - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Sales Report</h1>
+    <a href="{{ url_for('reports') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Reports
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Customer Sales Analysis</h5>
+            </div>
+            <div class="card-body">
+                {% if sales_data %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Total Orders</th>
+                                <th>Total Sales</th>
+                                <th>Average Order Value</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in sales_data %}
+                            <tr>
+                                <td>{{ data[0] }}</td>
+                                <td>{{ data[1] }}</td>
+                                <td>฿{{ "{:,.2f}".format(data[2] or 0) }}</td>
+                                <td>฿{{ "{:,.2f}".format((data[2] or 0) / (data[1] if data[1] > 0 else 1)) }}</td>
+                                <td>
+                                    {% set total = data[2] or 0 %}
+                                    {% if total > 5000 %}
+                                        <span class="badge bg-success">Excellent</span>
+                                    {% elif total > 2000 %}
+                                        <span class="badge bg-info">Good</span>
+                                    {% elif total > 500 %}
+                                        <span class="badge bg-warning">Average</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Low</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-dark">
+                                <th>Total</th>
+                                <th>{{ sales_data|sum(attribute=1) }}</th>
+                                <th>฿{{ "{:,.2f}".format(sales_data|sum(attribute=2) or 0) }}</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No sales data available. Create some sales orders to see the report.</p>
+                    <a href="{{ url_for('add_sales_order') }}" class="btn btn-primary">Create Sales Order</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if sales_data %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Sales Summary</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center">
+                            <h4 class="text-primary">{{ active_customers }}</h4>
+                            <small class="text-muted">Active Customers</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center">
+                            <h4 class="text-success">฿{{ "{:,.2f}".format(total_revenue or 0) }}</h4>
+                            <small class="text-muted">Total Revenue</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Performance Metrics</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center">
+                            <h4 class="text-info">{{ total_orders }}</h4>
+                            <small class="text-muted">Total Orders</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-center">
+                            <h4 class="text-warning">฿{{ "{:,.2f}".format(average_order_value or 0) }}</h4>
+                            <small class="text-muted">Avg Order Value</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

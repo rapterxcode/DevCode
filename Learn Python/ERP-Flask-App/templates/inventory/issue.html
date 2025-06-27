@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory Issue - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Inventory Issue</h1>
+    <a href="{{ url_for('add_inventory_issue') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>New Issue
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Issue Number</th>
+                        <th>Issue Date</th>
+                        <th>Issue Type</th>
+                        <th>Employee</th>
+                        <th>Total Items</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in issues %}
+                    <tr>
+                        <td><code>{{ issue.issue_number }}</code></td>
+                        <td>{{ issue.issue_date.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            {% if issue.issue_type == 'production' %}
+                            <span class="badge bg-primary">Production</span>
+                            {% elif issue.issue_type == 'maintenance' %}
+                            <span class="badge bg-warning">Maintenance</span>
+                            {% elif issue.issue_type == 'office' %}
+                            <span class="badge bg-info">Office Use</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Other</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ issue.employee.name if issue.employee else 'System' }}</td>
+                        <td>{{ issue.items|length if issue.items else 0 }}</td>
+                        <td>
+                            {% if issue.status == 'draft' %}
+                            <span class="badge bg-secondary">Draft</span>
+                            {% elif issue.status == 'approved' %}
+                            <span class="badge bg-success">Approved</span>
+                            {% elif issue.status == 'issued' %}
+                            <span class="badge bg-info">Issued</span>
+                            {% else %}
+                            <span class="badge bg-warning">Adjusting</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                            {% if issue.status == 'approved' %}
+                            <button class="btn btn-sm btn-outline-info">Issue</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not issues %}
+        <div class="text-center py-4">
+            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+            <p class="text-muted">No inventory issues found</p>
+            <a href="{{ url_for('add_inventory_issue') }}" class="btn btn-primary">Create Inventory Issue</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

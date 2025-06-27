@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}HR Dashboard - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Human Resources Dashboard</h1>
+    <div>
+        <a href="{{ url_for('add_employee') }}" class="btn btn-primary me-2">
+            <i class="fas fa-user-plus me-2"></i>Add Employee
+        </a>
+        <a href="{{ url_for('add_department') }}" class="btn btn-outline-primary">
+            <i class="fas fa-plus me-2"></i>Add Department
+        </a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card hr h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Total Employees</h6>
+                        <h2 class="text-white mb-0">{{ total_employees }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Departments</h6>
+                        <h2 class="text-white mb-0">{{ departments|length }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-sitemap fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card sales h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">Present Today</h6>
+                        <h2 class="text-white mb-0">{{ total_employees }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-calendar-check fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card purchases h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="text-white-50 text-uppercase mb-1">New Hires</h6>
+                        <h2 class="text-white mb-0">{{ recent_hires|length }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-user-plus fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-sitemap me-2"></i>Departments</h5>
+            </div>
+            <div class="card-body">
+                {% if departments %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Employees</th>
+                                <th>Manager</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dept in departments %}
+                            <tr>
+                                <td>{{ dept.name }}</td>
+                                <td>{{ dept.employees|length }}</td>
+                                <td>
+                                    {% if dept.manager_id %}
+                                        Manager Assigned
+                                    {% else %}
+                                        <span class="text-muted">No Manager</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No departments found.</p>
+                {% endif %}
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('departments') }}" class="btn btn-outline-primary btn-sm">View All Departments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>Recent Hires</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_hires %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Position</th>
+                                <th>Hire Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for emp in recent_hires %}
+                            <tr>
+                                <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                                <td>{{ emp.position or 'N/A' }}</td>
+                                <td>{{ emp.hire_date.strftime('%Y-%m-%d') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No recent hires.</p>
+                {% endif %}
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('employees') }}" class="btn btn-outline-primary btn-sm">View All Employees</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

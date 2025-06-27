@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Add Department - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Add New Department</h1>
+    <a href="{{ url_for('departments') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Departments
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Department Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="manager_id" class="form-label">Department Manager</label>
+                        <select class="form-select" id="manager_id" name="manager_id">
+                            <option value="">Select Manager</option>
+                            {% for employee in employees %}
+                            <option value="{{ employee.id }}">{{ employee.first_name }} {{ employee.last_name }} ({{ employee.employee_id }})</option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text">Optional: Assign an existing employee as department manager</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Add Department
+                        </button>
+                        <a href="{{ url_for('departments') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

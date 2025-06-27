@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Statements - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Financial Statements</h1>
+    <div>
+        <button class="btn btn-outline-primary me-2">
+            <i class="fas fa-print me-2"></i>Print
+        </button>
+        <button class="btn btn-outline-success">
+            <i class="fas fa-download me-2"></i>Export
+        </button>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format(total_assets or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Assets</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-building fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format(total_liabilities or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Liabilities</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-credit-card fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format(total_equity or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Equity</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-pie fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format(net_income or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Net Income</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Balance Sheet -->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-balance-scale me-2"></i>Balance Sheet</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr class="table-success">
+                            <td><strong>ASSETS</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(total_assets or 0) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Current Assets</td>
+                            <td class="text-end">${{ "{:,.2f}".format(current_assets or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Cash and Bank</td>
+                            <td class="text-end">${{ "{:,.2f}".format(cash_and_bank or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Accounts Receivable</td>
+                            <td class="text-end">${{ "{:,.2f}".format(accounts_receivable or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Inventory</td>
+                            <td class="text-end">${{ "{:,.2f}".format(inventory_value or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Fixed Assets</td>
+                            <td class="text-end">${{ "{:,.2f}".format(fixed_assets or 0) }}</td>
+                        </tr>
+                        
+                        <tr class="table-warning">
+                            <td><strong>LIABILITIES</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(total_liabilities or 0) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Current Liabilities</td>
+                            <td class="text-end">${{ "{:,.2f}".format(current_liabilities or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Accounts Payable</td>
+                            <td class="text-end">${{ "{:,.2f}".format(accounts_payable or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Long-term Debt</td>
+                            <td class="text-end">${{ "{:,.2f}".format(long_term_debt or 0) }}</td>
+                        </tr>
+                        
+                        <tr class="table-info">
+                            <td><strong>EQUITY</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(total_equity or 0) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Share Capital</td>
+                            <td class="text-end">${{ "{:,.2f}".format(share_capital or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Retained Earnings</td>
+                            <td class="text-end">${{ "{:,.2f}".format(retained_earnings or 0) }}</td>
+                        </tr>
+                        
+                        <tr class="table-dark">
+                            <td><strong>TOTAL LIABILITIES + EQUITY</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format((total_liabilities or 0) + (total_equity or 0)) }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Income Statement -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Income Statement</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr class="table-success">
+                            <td><strong>Revenue</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(total_revenue or 0) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Sales Revenue</td>
+                            <td class="text-end">${{ "{:,.2f}".format(sales_revenue or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Other Revenue</td>
+                            <td class="text-end">${{ "{:,.2f}".format(other_revenue or 0) }}</td>
+                        </tr>
+                        
+                        <tr class="table-primary">
+                            <td><strong>Cost of Goods Sold</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(cogs or 0) }}</strong></td>
+                        </tr>
+                        
+                        <tr class="table-info">
+                            <td><strong>Gross Profit</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(gross_profit or 0) }}</strong></td>
+                        </tr>
+                        
+                        <tr class="table-warning">
+                            <td><strong>Expenses</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(total_expenses or 0) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Operating Expenses</td>
+                            <td class="text-end">${{ "{:,.2f}".format(operating_expenses or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Sales Expenses</td>
+                            <td class="text-end">${{ "{:,.2f}".format(sales_expenses or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Administrative Expenses</td>
+                            <td class="text-end">${{ "{:,.2f}".format(admin_expenses or 0) }}</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp;Financial Expenses</td>
+                            <td class="text-end">${{ "{:,.2f}".format(financial_expenses or 0) }}</td>
+                        </tr>
+                        
+                        <tr class="table-dark">
+                            <td><strong>{% if net_income >= 0 %}Net Profit{% else %}Net Loss{% endif %}</strong></td>
+                            <td class="text-end"><strong>${{ "{:,.2f}".format(net_income or 0) }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Ratios -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-calculator me-2"></i>Key Financial Ratios</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <h4 class="text-primary">{{ "{:,.2f}".format(current_ratio or 0) }}</h4>
+                            <p class="text-muted mb-0">Current Ratio</p>
+                            <small class="text-info">Current Assets/Current Liabilities</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <h4 class="text-success">{{ "{:,.1f}".format(gross_margin or 0) }}%</h4>
+                            <p class="text-muted mb-0">Gross Margin</p>
+                            <small class="text-info">Gross Profit/Revenue</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <h4 class="text-warning">{{ "{:,.1f}".format(net_margin or 0) }}%</h4>
+                            <p class="text-muted mb-0">Net Margin</p>
+                            <small class="text-info">Net Income/Revenue</small>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <div class="text-center">
+                            <h4 class="text-info">{{ "{:,.1f}".format(debt_ratio or 0) }}%</h4>
+                            <p class="text-muted mb-0">Debt Ratio</p>
+                            <small class="text-info">Total Liabilities/Total Assets</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <div class="alert alert-info">
+                        <h6 class="alert-heading">Financial Health Summary</h6>
+                        <ul class="mb-0">
+                            <li><strong>Financial Status:</strong>
+                                {% if net_income >= 0 %}
+                                <span class="text-success">Company profitable ${{ "{:,.0f}".format(net_income) }}</span>
+                                {% else %}
+                                <span class="text-danger">Company loss ${{ "{:,.0f}".format(-net_income) }}</span>
+                                {% endif %}
+                            </li>
+                            <li><strong>Liquidity:</strong>
+                                {% if current_ratio >= 2 %}
+                                <span class="text-success">Good liquidity ({{ "{:,.2f}".format(current_ratio) }}"</span>
+                                {% elif current_ratio >= 1 %}
+                                <span class="text-warning">Adequate liquidity ({{ "{:,.2f}".format(current_ratio) }}"</span>
+                                {% else %}
+                                <span class="text-danger">Poor liquidity ({{ "{:,.2f}".format(current_ratio) }}"</span>
+                                {% endif %}
+                            </li>
+                            <li><strong>Recommendation:</strong> Monitor cash flow and manage working capital effectively</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

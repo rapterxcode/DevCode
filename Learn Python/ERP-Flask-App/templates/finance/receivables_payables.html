@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Accounts Receivable & Payable - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Accounts Receivable & Payable</h1>
+    <div>
+        <a href="#" class="btn btn-success me-2">
+            <i class="fas fa-plus me-2"></i>Add Receivable
+        </a>
+        <a href="#" class="btn btn-warning">
+            <i class="fas fa-plus me-2"></i>Add Payable
+        </a>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format(receivables|sum(attribute='total_amount') or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Receivables</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-hand-holding-usd fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">฿{{ "{:,.0f}".format(receivables|sum(attribute='total_amount') or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Receivables</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-credit-card fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">${{ "{:,.0f}".format((receivables|sum(attribute='total_amount') or 0) - (payables|sum(attribute='total_amount') or 0)) }}</h4>
+                        <p class="text-white-50 mb-0">Net Status</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-balance-scale fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="text-white mb-0">฿{{ "{:,.0f}".format(payables|sum(attribute='total_amount') or 0) }}</h4>
+                        <p class="text-white-50 mb-0">Total Payables</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-file-invoice fa-2x text-white-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Accounts Receivable -->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Accounts Receivable</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Due Date</th>
+                                <th>Days</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for receivable in receivables %}
+                            <tr>
+                                <td>{{ receivable.customer.name if receivable.customer else 'Unknown' }}</td>
+                                <td>${{ "{:,.2f}".format(receivable.total_amount - receivable.paid_amount) }}</td>
+                                <td>{{ receivable.due_date.strftime('%d/%m/%Y') if receivable.due_date else 'N/A' }}</td>
+                                <td>
+                                    {% if receivable.status == 'overdue' %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Current</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if receivable.status == 'overdue' %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                    {% elif receivable.status == 'paid' %}
+                                    <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">{{ receivable.status.title() }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if not receivables %}
+                <div class="text-center py-3">
+                    <p class="text-muted mb-0">No outstanding receivables</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Accounts Payable -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0"><i class="fas fa-file-invoice-dollar me-2"></i>Accounts Payable</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>Total</th>
+                                <th>Due Date</th>
+                                <th>Days</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payable in payables %}
+                            <tr>
+                                <td>{{ payable.vendor.name if payable.vendor else 'Unknown' }}</td>
+                                <td>฿{{ "{:,.2f}".format(payable.total_amount - payable.paid_amount) }}</td>
+                                <td>{{ payable.due_date.strftime('%d/%m/%Y') if payable.due_date else 'N/A' }}</td>
+                                <td>
+                                    {% if payable.status == 'overdue' %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                    {% else %}
+                                    <span class="badge bg-success">Current</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if payable.status == 'overdue' %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                    {% elif payable.status == 'paid' %}
+                                    <span class="badge bg-success">Paid</span>
+                                    {% else %}
+                                    <span class="badge bg-info">{{ payable.status.title() }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if not payables %}
+                <div class="text-center py-3">
+                    <p class="text-muted mb-0">No outstanding payables</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Analysis -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Debt Status Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <h6 class="text-success">Receivables Status</h6>
+                            <p class="mb-2">Total Outstanding: {{ receivables|length }} items</p>
+                            <p class="mb-0">Amount: ${{ "{:,.2f}".format(receivables|sum(attribute='total_amount') or 0) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <h6 class="text-warning">Payables Status</h6>
+                            <p class="mb-2">Total Outstanding: {{ payables|length }} items</p>
+                            <p class="mb-0">Amount: ฿{{ "{:,.2f}".format(payables|sum(attribute='total_amount') or 0) }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h6><i class="fas fa-info-circle me-2"></i>Financial Health Indicators</h6>
+                    <ul class="list-unstyled">
+                        <li>• Outstanding receivables to follow up: {{ receivables|length }} items</li>
+                        <li>• Outstanding payables: {{ payables|length }} items</li>
+                        <li>• Monitor payment regularly and plan cash flow consistently</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

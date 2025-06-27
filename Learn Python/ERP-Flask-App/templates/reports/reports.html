@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Reports & Analytics - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Reports & Analytics</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Sales Report</h5>
+                <p class="card-text">View detailed sales performance, customer analysis, and revenue trends.</p>
+                <a href="{{ url_for('sales_report') }}" class="btn btn-primary">
+                    <i class="fas fa-chart-line me-2"></i>View Sales Report
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-clipboard-list fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Inventory Report</h5>
+                <p class="card-text">Monitor stock levels, product performance, and inventory valuation.</p>
+                <a href="{{ url_for('inventory_report') }}" class="btn btn-success">
+                    <i class="fas fa-clipboard-list me-2"></i>View Inventory Report
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-truck fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">Purchase Report</h5>
+                <p class="card-text">Analyze purchasing patterns, vendor performance, and cost trends.</p>
+                <button class="btn btn-warning" disabled>
+                    <i class="fas fa-truck me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-info mb-3"></i>
+                <h5 class="card-title">HR Report</h5>
+                <p class="card-text">Employee statistics, department analysis, and attendance reports.</p>
+                <button class="btn btn-info" disabled>
+                    <i class="fas fa-users me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-pie fa-3x text-danger mb-3"></i>
+                <h5 class="card-title">Financial Report</h5>
+                <p class="card-text">Profit & loss statements, balance sheets, and financial analysis.</p>
+                <button class="btn btn-danger" disabled>
+                    <i class="fas fa-chart-pie me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-download fa-3x text-secondary mb-3"></i>
+                <h5 class="card-title">Export Data</h5>
+                <p class="card-text">Export reports to PDF, Excel, or CSV formats for external analysis.</p>
+                <button class="btn btn-secondary" disabled>
+                    <i class="fas fa-download me-2"></i>Coming Soon
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Report Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6 class="alert-heading">Available Reports</h6>
+                    <ul class="mb-0">
+                        <li><strong>Sales Report:</strong> Customer-wise sales analysis with order counts and total revenue</li>
+                        <li><strong>Inventory Report:</strong> Complete product listing with stock levels, pricing, and category information</li>
+                        <li><strong>Additional Reports:</strong> Purchase, HR, and Financial reports are currently in development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

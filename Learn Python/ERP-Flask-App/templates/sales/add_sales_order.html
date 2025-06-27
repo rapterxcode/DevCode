@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}Create Sales Order - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Create Sales Order</h1>
+    <a href="{{ url_for('sales') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Sales
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="customer_id" class="form-label">Customer *</label>
+                                <select class="form-select" id="customer_id" name="customer_id" required>
+                                    <option value="">Select Customer</option>
+                                    {% for customer in customers %}
+                                    <option value="{{ customer.id }}">{{ customer.name }} ({{ customer.email }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="delivery_date" class="form-label">Delivery Date</label>
+                                <input type="date" class="form-control" id="delivery_date" name="delivery_date">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="discount" class="form-label">Discount (%)</label>
+                                <input type="number" class="form-control" id="discount" name="discount" step="0.01" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5>Order Items</h5>
+                    <div id="order-items">
+                        <div class="row mb-3 order-item">
+                            <div class="col-md-6">
+                                <label class="form-label">Product</label>
+                                <select class="form-select" name="product_id" required>
+                                    <option value="">Select Product</option>
+                                    {% for product in products %}
+                                    <option value="{{ product.id }}" data-price="{{ product.unit_price }}">
+                                        {{ product.name }} - ฿{{ "{:,.2f}".format(product.unit_price) }} (Stock: {{ product.stock_quantity }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Quantity</label>
+                                <input type="number" class="form-control" name="quantity" min="1" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Subtotal</label>
+                                <input type="text" class="form-control subtotal" readonly>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-danger btn-sm d-block" onclick="removeOrderItem(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-secondary" onclick="addOrderItem()">
+                            <i class="fas fa-plus me-2"></i>Add Item
+                        </button>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>Order Summary</h6>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Subtotal:</span>
+                                        <span id="order-subtotal">฿0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Discount:</span>
+                                        <span id="order-discount">฿0.00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Tax (10%):</span>
+                                        <span id="order-tax">฿0.00</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between fw-bold">
+                                        <span>Total:</span>
+                                        <span id="order-total">฿0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Create Sales Order
+                        </button>
+                        <a href="{{ url_for('sales') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function addOrderItem() {
+    const orderItems = document.getElementById('order-items');
+    const newItem = document.querySelector('.order-item').cloneNode(true);
+    newItem.querySelector('select[name="product_id"]').value = '';
+    newItem.querySelector('input[name="quantity"]').value = '';
+    newItem.querySelector('.subtotal').value = '';
+    orderItems.appendChild(newItem);
+    attachEventListeners();
+}
+
+function removeOrderItem(button) {
+    const orderItems = document.getElementById('order-items');
+    if (orderItems.children.length > 1) {
+        button.closest('.order-item').remove();
+        calculateTotal();
+    }
+}
+
+function attachEventListeners() {
+    document.querySelectorAll('select[name="product_id"], input[name="quantity"], input[name="discount"]').forEach(element => {
+        element.addEventListener('change', calculateTotal);
+        element.addEventListener('input', calculateTotal);
+    });
+}
+
+function calculateTotal() {
+    let subtotal = 0;
+    
+    document.querySelectorAll('.order-item').forEach(item => {
+        const select = item.querySelector('select[name="product_id"]');
+        const quantity = parseFloat(item.querySelector('input[name="quantity"]').value) || 0;
+        const price = parseFloat(select.options[select.selectedIndex]?.dataset.price) || 0;
+        const itemSubtotal = price * quantity;
+        
+        item.querySelector('.subtotal').value = '฿' + itemSubtotal.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        subtotal += itemSubtotal;
+    });
+    
+    const discount = parseFloat(document.getElementById('discount').value) || 0;
+    const discountAmount = subtotal * (discount / 100);
+    const taxableAmount = subtotal - discountAmount;
+    const taxAmount = taxableAmount * 0.1;
+    const total = taxableAmount + taxAmount;
+    
+    document.getElementById('order-subtotal').textContent = '฿' + subtotal.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('order-discount').textContent = '฿' + discountAmount.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('order-tax').textContent = '฿' + taxAmount.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('order-total').textContent = '฿' + total.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    attachEventListeners();
+});
+</script>
+{% endblock %}

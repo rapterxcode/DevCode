@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Add Product - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Add New Product</h1>
+    <a href="{{ url_for('inventory') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Inventory
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Product Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="sku" class="form-label">SKU *</label>
+                                <input type="text" class="form-control" id="sku" name="sku" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category_id" class="form-label">Category</label>
+                                <select class="form-select" id="category_id" name="category_id">
+                                    <option value="">Select Category</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="unit_of_measure" class="form-label">Unit of Measure</label>
+                                <select class="form-select" id="unit_of_measure" name="unit_of_measure">
+                                    <option value="pcs">Pieces</option>
+                                    <option value="kg">Kilograms</option>
+                                    <option value="lbs">Pounds</option>
+                                    <option value="box">Box</option>
+                                    <option value="pack">Pack</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="unit_price" class="form-label">Unit Price *</label>
+                                <input type="number" class="form-control" id="unit_price" name="unit_price" step="0.01" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="cost_price" class="form-label">Cost Price *</label>
+                                <input type="number" class="form-control" id="cost_price" name="cost_price" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="stock_quantity" class="form-label">Initial Stock Quantity *</label>
+                                <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="reorder_level" class="form-label">Reorder Level *</label>
+                                <input type="number" class="form-control" id="reorder_level" name="reorder_level" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Add Product
+                        </button>
+                        <a href="{{ url_for('inventory') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

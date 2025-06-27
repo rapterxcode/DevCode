@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Quotations - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Quotation Management</h1>
+    <a href="{{ url_for('add_quotation') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Create Quotation
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Quotation Number</th>
+                        <th>Customer</th>
+                        <th>Quote Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quotation in quotations %}
+                    <tr>
+                        <td>{{ quotation.quote_number }}</td>
+                        <td>{{ quotation.customer.name }}</td>
+                        <td>{{ quotation.quote_date.strftime('%d/%m/%Y') }}</td>
+                        <td>฿{{ "{:,.2f}".format(quotation.total_amount or 0) }}</td>
+                        <td>
+                            {% if quotation.status == 'draft' %}
+                            <span class="badge bg-secondary">Draft</span>
+                            {% elif quotation.status == 'sent' %}
+                            <span class="badge bg-info">Sent</span>
+                            {% elif quotation.status == 'accepted' %}
+                            <span class="badge bg-success">Accepted</span>
+                            {% elif quotation.status == 'rejected' %}
+                            <span class="badge bg-danger">Rejected</span>
+                            {% else %}
+                            <span class="badge bg-warning">Expired</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">View</button>
+                            <button class="btn btn-sm btn-outline-success">Edit</button>
+                            <button class="btn btn-sm btn-outline-info">Print</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if not quotations %}
+        <div class="text-center py-4">
+            <p class="text-muted">No quotations found</p>
+            <a href="{{ url_for('add_quotation') }}" class="btn btn-primary">Create Quotation</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
