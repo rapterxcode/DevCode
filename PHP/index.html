@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เบอร์สวย & ทะเบียนรถ - ศูนย์รวมเบอร์มงคล</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><i class="fas fa-phone-alt"></i> เบอร์สวย & ทะเบียนรถ</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home">หน้าแรก</a></li>
+                    <li><a href="#products">สินค้า</a></li>
+                    <li><a href="#search">ค้นหา</a></li>
+                    <li><a href="#contact">ติดต่อเรา</a></li>
+                    <li><a href="#admin" class="admin-btn">จัดการสินค้า</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>ศูนย์รวมเบอร์มงคล & ทะเบียนรถสวย</h1>
+            <p>เลือกเบอร์โทรศัพท์และทะเบียนรถที่เหมาะกับดวงชะตาของคุณ</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">ดูสินค้า</a>
+                <a href="#search" class="btn btn-secondary">ค้นหาเบอร์</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="search-section">
+        <div class="container">
+            <h2>ค้นหาเบอร์และทะเบียน</h2>
+            <div class="search-form">
+                <div class="search-tabs">
+                    <button class="tab-btn active" data-tab="number">ค้นหาเบอร์</button>
+                    <button class="tab-btn" data-tab="license">ค้นหาทะเบียน</button>
+                    <button class="tab-btn" data-tab="numerology">ค้นหาตามเลขศาสตร์</button>
+                </div>
+                
+                <div class="tab-content active" id="number-tab">
+                    <div class="search-filters">
+                        <select class="filter-select">
+                            <option value="">เลือกเครือข่าย</option>
+                            <option value="ais">AIS</option>
+                            <option value="dtac">DTAC</option>
+                            <option value="true">TRUE</option>
+                        </select>
+                        <input type="text" placeholder="ป้อนเบอร์ที่ต้องการ" class="search-input">
+                        <button class="btn btn-search"><i class="fas fa-search"></i> ค้นหา</button>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="license-tab">
+                    <div class="search-filters">
+                        <input type="text" placeholder="ป้อนทะเบียนที่ต้องการ" class="search-input">
+                        <select class="filter-select">
+                            <option value="">เลือกจังหวัด</option>
+                            <option value="bangkok">กรุงเทพมหานคร</option>
+                            <option value="chonburi">ชลบุรี</option>
+                            <option value="chiangmai">เชียงใหม่</option>
+                        </select>
+                        <button class="btn btn-search"><i class="fas fa-search"></i> ค้นหา</button>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="numerology-tab">
+                    <div class="search-filters">
+                        <input type="number" placeholder="ผลรวมที่ต้องการ (เช่น 42, 64, 57)" class="search-input">
+                        <select class="filter-select">
+                            <option value="">ประเภท</option>
+                            <option value="phone">เบอร์โทรศัพท์</option>
+                            <option value="license">ทะเบียนรถ</option>
+                        </select>
+                        <button class="btn btn-search"><i class="fas fa-calculator"></i> คำนวณ</button>
+                    </div>
+                    <div class="numerology-info">
+                        <p><i class="fas fa-info-circle"></i> ผลรวม 42: ความสำเร็จในการงาน</p>
+                        <p><i class="fas fa-info-circle"></i> ผลรวม 64: ความมั่งคั่งทางการเงิน</p>
+                        <p><i class="fas fa-info-circle"></i> ผลรวม 57: ความรักและความสัมพันธ์</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <h2>สินค้าแนะนำ</h2>
+            
+            <!-- Product Categories -->
+            <div class="category-tabs">
+                <button class="category-btn active" data-category="all">ทั้งหมด</button>
+                <button class="category-btn" data-category="phone">เบอร์โทรศัพท์</button>
+                <button class="category-btn" data-category="license">ทะเบียนรถ</button>
+            </div>
+
+            <!-- Phone Numbers -->
+            <div class="product-grid" id="phone-products">
+                <div class="product-card" data-category="phone">
+                    <div class="product-header">
+                        <span class="network-badge ais">AIS</span>
+                        <span class="status-badge available">ว่าง</span>
+                    </div>
+                    <div class="product-number">081-234-5678</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>42</strong></span>
+                        <span class="meaning">ความสำเร็จ</span>
+                    </div>
+                    <div class="product-price">฿12,000</div>
+                    <button class="btn btn-order">สั่งซื้อเบอร์โปรด</button>
+                </div>
+
+                <div class="product-card" data-category="phone">
+                    <div class="product-header">
+                        <span class="network-badge dtac">DTAC</span>
+                        <span class="status-badge reserved">จอง</span>
+                    </div>
+                    <div class="product-number">089-888-8888</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>64</strong></span>
+                        <span class="meaning">ความมั่งคั่ง</span>
+                    </div>
+                    <div class="product-price">฿25,000</div>
+                    <button class="btn btn-order disabled">สั่งซื้อเบอร์โปรด</button>
+                </div>
+
+                <div class="product-card" data-category="phone">
+                    <div class="product-header">
+                        <span class="network-badge true">TRUE</span>
+                        <span class="status-badge available">ว่าง</span>
+                    </div>
+                    <div class="product-number">065-777-7777</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>57</strong></span>
+                        <span class="meaning">ความรัก</span>
+                    </div>
+                    <div class="product-price">฿18,000</div>
+                    <button class="btn btn-order">สั่งซื้อเบอร์โปรด</button>
+                </div>
+
+                <!-- License Plates -->
+                <div class="product-card" data-category="license">
+                    <div class="product-header">
+                        <span class="province-badge">กรุงเทพฯ</span>
+                        <span class="status-badge available">ว่าง</span>
+                    </div>
+                    <div class="product-number license-plate">8888</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>32</strong></span>
+                        <span class="meaning">ความโชคดี</span>
+                    </div>
+                    <div class="product-price">฿35,000</div>
+                    <button class="btn btn-order">สั่งซื้อทะเบียน</button>
+                </div>
+
+                <div class="product-card" data-category="license">
+                    <div class="product-header">
+                        <span class="province-badge">ชลบุรี</span>
+                        <span class="status-badge sold">ขายแล้ว</span>
+                    </div>
+                    <div class="product-number license-plate">4242</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>12</strong></span>
+                        <span class="meaning">ความเจริญ</span>
+                    </div>
+                    <div class="product-price">฿28,000</div>
+                    <button class="btn btn-order disabled">สั่งซื้อทะเบียน</button>
+                </div>
+
+                <div class="product-card" data-category="license">
+                    <div class="product-header">
+                        <span class="province-badge">เชียงใหม่</span>
+                        <span class="status-badge available">ว่าง</span>
+                    </div>
+                    <div class="product-number license-plate">9999</div>
+                    <div class="numerology">
+                        <span>ผลรวม: <strong>36</strong></span>
+                        <span class="meaning">ความสุข</span>
+                    </div>
+                    <div class="product-price">฿45,000</div>
+                    <button class="btn btn-order">สั่งซื้อทะเบียน</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Section -->
+    <section id="admin" class="admin-section">
+        <div class="container">
+            <h2>จัดการสินค้า</h2>
+            <div class="admin-controls">
+                <button class="btn btn-primary" onclick="showAddForm()">
+                    <i class="fas fa-plus"></i> เพิ่มสินค้าใหม่
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-list"></i> จัดการสินค้า
+                </button>
+            </div>
+            
+            <div class="add-product-form" id="addProductForm" style="display: none;">
+                <h3>เพิ่มสินค้าใหม่</h3>
+                <form>
+                    <div class="form-group">
+                        <label>ประเภทสินค้า:</label>
+                        <select class="form-control">
+                            <option value="phone">เบอร์โทรศัพท์</option>
+                            <option value="license">ทะเบียนรถ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>หมายเลข:</label>
+                        <input type="text" class="form-control" placeholder="ป้อนหมายเลข">
+                    </div>
+                    <div class="form-group">
+                        <label>ราคา (บาท):</label>
+                        <input type="number" class="form-control" placeholder="ป้อนราคา">
+                    </div>
+                    <div class="form-group">
+                        <label>เครือข่าย/จังหวัด:</label>
+                        <select class="form-control">
+                            <option value="ais">AIS</option>
+                            <option value="dtac">DTAC</option>
+                            <option value="true">TRUE</option>
+                            <option value="bangkok">กรุงเทพมหานคร</option>
+                            <option value="chonburi">ชลบุรี</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddForm()">ยกเลิก</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>ติดต่อเรา</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>โทรศัพท์</h4>
+                            <p>081-234-5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>อีเมล</h4>
+                            <p>info@phonebeauty.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-facebook"></i>
+                        <div>
+                            <h4>Facebook</h4>
+                            <p>เบอร์สวย & ทะเบียนรถ</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-line"></i>
+                        <div>
+                            <h4>LINE ID</h4>
+                            <p>@phonebeauty</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="ชื่อ-นามสกุล" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="เบอร์โทรศัพท์" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="อีเมล">
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="ข้อความ" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">ส่งข้อความ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>เบอร์สวย & ทะเบียนรถ</h3>
+                    <p>ศูนย์รวมเบอร์มงคลและทะเบียนรถสวยคุณภาพ</p>
+                </div>
+                <div class="footer-section">
+                    <h4>บริการ</h4>
+                    <ul>
+                        <li><a href="#products">เบอร์โทรศัพท์</a></li>
+                        <li><a href="#products">ทะเบียนรถ</a></li>
+                        <li><a href="#search">คำนวณเลขศาสตร์</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>ติดต่อ</h4>
+                    <p><i class="fas fa-phone"></i> 081-234-5678</p>
+                    <p><i class="fas fa-envelope"></i> info@phonebeauty.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 เบอร์สวย & ทะเบียนรถ. สงวนลิขสิทธิ์.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

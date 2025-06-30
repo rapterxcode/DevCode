@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Add Inventory Issue - ERP System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Add Inventory Issue</h1>
+    <a href="{{ url_for('inventory_issue') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to List
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="department_id" class="form-label">Department / แผนก</label>
+                    <select class="form-select" id="department_id" name="department_id" required>
+                        <option value="">Select Department / เลือกแผนก</option>
+                        {% for department in departments %}
+                        <option value="{{ department.id }}">{{ department.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="employee_id" class="form-label">Employee / พนักงาน</label>
+                    <select class="form-select" id="employee_id" name="employee_id" required>
+                        <option value="">Select Employee / เลือกพนักงาน</option>
+                        {% for employee in employees %}
+                        <option value="{{ employee.id }}">{{ employee.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="issue_type" class="form-label">Issue Type / ประเภทการเบิก</label>
+                    <select class="form-select" id="issue_type" name="issue_type" required>
+                        <option value="">Select Issue Type / เลือกประเภทการเบิก</option>
+                        <option value="production">Production / การผลิต</option>
+                        <option value="maintenance">Maintenance / การบำรุงรักษา</option>
+                        <option value="office">Office Use / ใช้งานสำนักงาน</option>
+                        <option value="other">Other / อื่นๆ</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="issue_date" class="form-label">Issue Date / วันที่เบิก</label>
+                    <input type="date" class="form-control" id="issue_date" name="issue_date" required>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="priority" class="form-label">Priority / ความสำคัญ</label>
+                    <select class="form-select" id="priority" name="priority">
+                        <option value="normal">Normal / ปกติ</option>
+                        <option value="high">High / สูง</option>
+                        <option value="urgent">Urgent / เร่งด่วน</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label for="status" class="form-label">Status / สถานะ</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="draft">Draft / ร่าง</option>
+                        <option value="approved">Approved / อนุมัติ</option>
+                        <option value="issued">Issued / เบิกแล้ว</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="purpose" class="form-label">Purpose / วัตถุประสงค์</label>
+                <textarea class="form-control" id="purpose" name="purpose" rows="2" 
+                          placeholder="Enter purpose of issue / ใส่วัตถุประสงค์การเบิก"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="notes" class="form-label">Notes / หมายเหตุ</label>
+                <textarea class="form-control" id="notes" name="notes" rows="3" 
+                          placeholder="Enter any notes / ใส่หมายเหตุ"></textarea>
+            </div>
+            
+            <!-- Product Selection -->
+            <h5 class="mb-3">Products to Issue / สินค้าที่ต้องการเบิก</h5>
+            <div id="product-items">
+                <div class="row product-item mb-2">
+                    <div class="col-md-4">
+                        <select class="form-select" name="product_id[]" required>
+                            <option value="">Select Product / เลือกสินค้า</option>
+                            {% for product in products %}
+                            <option value="{{ product.id }}">{{ product.name }} ({{ product.sku }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" name="quantity[]" placeholder="Quantity / จำนวน" 
+                               min="1" step="0.01" required>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="unit[]" placeholder="Unit / หน่วย" readonly>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" name="location[]" placeholder="Location / ตำแหน่ง">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="btn btn-outline-primary mb-3" id="add-item">
+                <i class="fas fa-plus me-2"></i>Add Item / เพิ่มรายการ
+            </button>
+            
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel / ยกเลิก</button>
+                <button type="submit" class="btn btn-primary">Save Issue / บันทึกการเบิก</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('add-item').addEventListener('click', function() {
+    const container = document.getElementById('product-items');
+    const firstItem = container.querySelector('.product-item');
+    const newItem = firstItem.cloneNode(true);
+    
+    // Clear input values
+    newItem.querySelectorAll('input, select').forEach(input => {
+        input.value = '';
+    });
+    
+    container.appendChild(newItem);
+    
+    // Add remove functionality
+    newItem.querySelector('.remove-item').addEventListener('click', function() {
+        if (container.children.length > 1) {
+            newItem.remove();
+        }
+    });
+});
+
+// Add remove functionality to existing items
+document.querySelectorAll('.remove-item').forEach(button => {
+    button.addEventListener('click', function() {
+        const container = document.getElementById('product-items');
+        if (container.children.length > 1) {
+            button.closest('.product-item').remove();
+        }
+    });
+});
+
+// Set today's date as default
+document.getElementById('issue_date').valueAsDate = new Date();
+
+// Filter employees by department
+document.getElementById('department_id').addEventListener('change', function() {
+    const departmentId = this.value;
+    const employeeSelect = document.getElementById('employee_id');
+    
+    // Reset employee select
+    employeeSelect.innerHTML = '<option value="">Select Employee / เลือกพนักงาน</option>';
+    
+    if (departmentId) {
+        // Filter employees (this would typically be done via AJAX)
+        {% for employee in employees %}
+        if ('{{ employee.department_id }}' === departmentId) {
+            const option = document.createElement('option');
+            option.value = '{{ employee.id }}';
+            option.textContent = '{{ employee.name }}';
+            employeeSelect.appendChild(option);
+        }
+        {% endfor %}
+    } else {
+        // Show all employees if no department selected
+        {% for employee in employees %}
+        const option = document.createElement('option');
+        option.value = '{{ employee.id }}';
+        option.textContent = '{{ employee.name }}';
+        employeeSelect.appendChild(option);
+        {% endfor %}
+    }
+});
+</script>
+{% endblock %}

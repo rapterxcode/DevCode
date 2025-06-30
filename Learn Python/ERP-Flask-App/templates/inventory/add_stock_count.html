@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Add Inventory Receive - ERP System{% endblock %}
+{% block title %}Add Stock Count - ERP System{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">Add Inventory Receive</h1>
-    <a href="{{ url_for('inventory_receive') }}" class="btn btn-secondary">
+    <h1 class="h3 mb-0">Add Stock Count</h1>
+    <a href="{{ url_for('stock_count') }}" class="btn btn-secondary">
         <i class="fas fa-arrow-left me-2"></i>Back to List
     </a>
 </div>
@@ -15,34 +15,35 @@
         <form method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="vendor_id" class="form-label">Vendor / ผู้ขาย</label>
-                    <select class="form-select" id="vendor_id" name="vendor_id" required>
-                        <option value="">Select Vendor / เลือกผู้ขาย</option>
-                        {% for vendor in vendors %}
-                        <option value="{{ vendor.id }}">{{ vendor.name }}</option>
-                        {% endfor %}
+                    <label for="count_type" class="form-label">Count Type / ประเภทการนับ</label>
+                    <select class="form-select" id="count_type" name="count_type" required>
+                        <option value="">Select Count Type / เลือกประเภทการนับ</option>
+                        <option value="full">Full Count / นับทั้งหมด</option>
+                        <option value="cycle">Cycle Count / นับตามรอบ</option>
+                        <option value="spot">Spot Count / นับจุด</option>
                     </select>
                 </div>
                 
                 <div class="col-md-6 mb-3">
-                    <label for="receive_date" class="form-label">Receive Date / วันที่รับ</label>
-                    <input type="date" class="form-control" id="receive_date" name="receive_date" required>
+                    <label for="count_date" class="form-label">Count Date / วันที่นับ</label>
+                    <input type="date" class="form-control" id="count_date" name="count_date" required>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="purchase_order_id" class="form-label">Purchase Order / ใบสั่งซื้อ</label>
-                    <select class="form-select" id="purchase_order_id" name="purchase_order_id">
-                        <option value="">Direct Receive / รับตรง</option>
-                        <!-- Add purchase orders here -->
-                    </select>
+                    <label for="counted_by" class="form-label">Counted By / ผู้นับ</label>
+                    <input type="text" class="form-control" id="counted_by" name="counted_by" 
+                           placeholder="Enter counter name / ใส่ชื่อผู้นับ">
                 </div>
                 
                 <div class="col-md-6 mb-3">
-                    <label for="received_by" class="form-label">Received By / ผู้รับ</label>
-                    <input type="text" class="form-control" id="received_by" name="received_by" 
-                           placeholder="Enter receiver name / ใส่ชื่อผู้รับ">
+                    <label for="status" class="form-label">Status / สถานะ</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="draft">Draft / ร่าง</option>
+                        <option value="counting">Counting / กำลังนับ</option>
+                        <option value="completed">Completed / เสร็จสิ้น</option>
+                    </select>
                 </div>
             </div>
             
@@ -53,7 +54,7 @@
             </div>
             
             <!-- Product Selection -->
-            <h5 class="mb-3">Products / สินค้า</h5>
+            <h5 class="mb-3">Products to Count / สินค้าที่จะนับ</h5>
             <div id="product-items">
                 <div class="row product-item mb-2">
                     <div class="col-md-4">
@@ -65,15 +66,16 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="quantity[]" placeholder="Quantity / จำนวน" 
-                               min="1" required>
+                        <input type="number" class="form-control" name="expected_quantity[]" 
+                               placeholder="Expected / คาดการณ์" min="0" step="0.01">
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="unit_cost[]" placeholder="Unit Cost / ต้นทุนต่อหน่วย" 
-                               step="0.01" min="0" required>
+                        <input type="number" class="form-control" name="actual_quantity[]" 
+                               placeholder="Actual / จริง" min="0" step="0.01" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="batch_number[]" placeholder="Batch / ล็อต">
+                        <input type="text" class="form-control" name="location[]" 
+                               placeholder="Location / ตำแหน่ง">
                     </div>
                     <div class="col-md-2">
                         <button type="button" class="btn btn-outline-danger remove-item">
@@ -89,7 +91,7 @@
             
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary me-2" onclick="history.back()">Cancel / ยกเลิก</button>
-                <button type="submit" class="btn btn-primary">Save Receive / บันทึกการรับ</button>
+                <button type="submit" class="btn btn-primary">Save Count / บันทึกการนับ</button>
             </div>
         </form>
     </div>
@@ -125,5 +127,8 @@ document.querySelectorAll('.remove-item').forEach(button => {
         }
     });
 });
+
+// Set today's date as default
+document.getElementById('count_date').valueAsDate = new Date();
 </script>
 {% endblock %}
