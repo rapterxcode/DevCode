@@ -1,0 +1,2 @@
+2025-06-22 09:13:51,384 - INFO - Application started
+2025-06-22 09:13:51,682 - INFO - UI initialized

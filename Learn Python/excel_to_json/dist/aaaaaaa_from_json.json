@@ -1,0 +1,1632 @@
+[
+    {
+        "log_entry_id": "GF-LOG-20240529-0001",
+        "timestamp": "2024-05-29T00:00:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Grafana server started successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 12345,
+                "thread_id": "main",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "cluster_name": "grafana-cluster-a",
+                    "server_role": "frontend"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.2,
+                "memory_usage_mb": 300,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 10.5,
+                "network_out_kbps": 20.3
+            },
+            "specific_event_data": {
+                "startup_time_ms": 1500,
+                "version": "10.4.0",
+                "plugins_loaded_count": 15
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0002",
+        "timestamp": "2024-05-29T00:01:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Scrape target '192.168.1.10:9100' is up and healthy.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "target_manager",
+                "process_id": 6789,
+                "thread_id": "scrape-loop-1",
+                "file_path": "/var/log/prometheus/prometheus.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "cluster_name": "grafana-cluster-a",
+                    "job_name": "node_exporter_targets"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 12.8,
+                "memory_usage_mb": 800,
+                "disk_usage_percent": 60.5,
+                "network_in_kbps": 250.7,
+                "network_out_kbps": 180.2
+            },
+            "specific_event_data": {
+                "target_address": "192.168.1.10:9100",
+                "scrape_duration_ms": 50,
+                "metrics_count": 500
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0003",
+        "timestamp": "2024-05-29T00:02:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Failed to connect to Grafana backend (upstream timeout).",
+        "severity": "ERROR",
+        "details": {
+            "context": {
+                "component": "proxy",
+                "process_id": 1122,
+                "thread_id": "worker-0",
+                "file_path": "/var/log/nginx/error.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "cluster_name": "grafana-cluster-a",
+                    "client_ip": "10.0.0.50"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 75.3,
+                "memory_usage_mb": 500,
+                "disk_usage_percent": 88.0,
+                "network_in_kbps": 900.5,
+                "network_out_kbps": 950.1
+            },
+            "specific_event_data": {
+                "upstream_server": "192.168.1.10:3000",
+                "error_code": "504 Gateway Timeout",
+                "request_method": "GET",
+                "request_uri": "/d/dashboard_id/dashboard_name",
+                "incident_id": "INC-NGINX-001",
+                "impact_description": "Users unable to access Grafana UI.",
+                "suggested_remediation": {
+                    "action_type": "check_grafana_health",
+                    "command": "curl http://192.168.1.10:3000/api/health",
+                    "estimated_downtime_seconds": 120,
+                    "related_kb_article": "KB-NGINX-UPSTREAM-001",
+                    "escalation_level": {
+                        "tier": 2,
+                        "team": "backend-ops",
+                        "contact_method": "pagerduty"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0004",
+        "timestamp": "2024-05-29T00:03:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Database connection from Grafana established.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "connection_manager",
+                "process_id": 3456,
+                "thread_id": "db-listener",
+                "file_path": "/var/log/postgresql/postgresql.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "db_instance_id": "db-grafana-prod",
+                    "client_application": "grafana-server"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 8.1,
+                "memory_usage_mb": 1500,
+                "disk_usage_percent": 55.0,
+                "network_in_kbps": 50.0,
+                "network_out_kbps": 30.0
+            },
+            "specific_event_data": {
+                "client_ip": "192.168.1.10",
+                "database_name": "grafana",
+                "connection_type": "TCP/IP"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0005",
+        "timestamp": "2024-05-29T00:04:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "High disk I/O on data volume '/dev/sda1'.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "io_monitor",
+                "process_id": 9101,
+                "thread_id": "disk-metrics",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "mount_point": "/grafana_data",
+                    "filesystem_type": "ext4"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 30.0,
+                "memory_usage_mb": 100,
+                "disk_usage_percent": 75.5,
+                "network_in_kbps": 20.0,
+                "network_out_kbps": 10.0,
+                "disk_read_ops_per_sec": 500,
+                "disk_write_ops_per_sec": 800
+            },
+            "specific_event_data": {
+                "volume_path": "/dev/sda1",
+                "current_io_utilization_percent": 90.0,
+                "io_read_kbps": 10240,
+                "io_write_kbps": 15360,
+                "threshold_details": {
+                    "metric_name": "disk_io_utilization",
+                    "threshold_value": "80%",
+                    "duration_above_threshold_seconds": 120
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0006",
+        "timestamp": "2024-05-29T00:05:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "User 'admin' logged in successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "authentication",
+                "process_id": 12345,
+                "thread_id": "auth-handler",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 6.1,
+                "memory_usage_mb": 310,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 15.0,
+                "network_out_kbps": 25.0
+            },
+            "specific_event_data": {
+                "username": "admin",
+                "client_ip": "10.0.0.50",
+                "auth_method": "local",
+                "session_id": "sess-abc-123"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0007",
+        "timestamp": "2024-05-29T00:06:00Z",
+        "vm_name": "192.168.1.15",
+        "service_name": "alertmanager",
+        "event_summary": "Alert 'HighDiskIO' received and processed.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "alert_processing",
+                "process_id": 2020,
+                "thread_id": "alert-receiver",
+                "file_path": "/var/log/alertmanager/alertmanager.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "region": "us-east-1",
+                    "alert_source": "prometheus"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 7.0,
+                "memory_usage_mb": 200,
+                "disk_usage_percent": 30.0,
+                "network_in_kbps": 80.0,
+                "network_out_kbps": 40.0
+            },
+            "specific_event_data": {
+                "alert_name": "HighDiskIO",
+                "severity_from_alert": "warning",
+                "receiver": "email-alerts",
+                "status": "firing",
+                "alert_labels": {
+                    "instance": "192.168.1.14:9100",
+                    "job": "node_exporter"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0008",
+        "timestamp": "2024-05-29T00:07:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Prometheus rule 'GrafanaDown' evaluated as true.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0009",
+        "timestamp": "2024-05-29T00:08:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Database query error: table 'dashboards' not found.",
+        "severity": "ERROR",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0010",
+        "timestamp": "2024-05-29T00:09:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "HTTP access log: 200 GET /grafana/login",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "web_server",
+                "process_id": 1122,
+                "thread_id": "worker-1",
+                "file_path": "/var/log/nginx/access.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "request_id": "req-xyz-456"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 10.0,
+                "memory_usage_mb": 260,
+                "disk_usage_percent": 25.0,
+                "network_in_kbps": 300.0,
+                "network_out_kbps": 400.0
+            },
+            "specific_event_data": {
+                "status_code": 200,
+                "request_method": "GET",
+                "request_uri": "/grafana/login",
+                "client_ip": "10.0.0.51",
+                "response_size_bytes": 10240
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0011",
+        "timestamp": "2024-05-29T00:10:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "High number of idle connections detected.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "connection_pool",
+                "process_id": 3456,
+                "thread_id": "monitor",
+                "file_path": "/var/log/postgresql/postgresql.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "db_name": "grafana"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 45.0,
+                "memory_usage_mb": 1800,
+                "disk_usage_percent": 60.0,
+                "network_in_kbps": 70.0,
+                "network_out_kbps": 50.0,
+                "active_connections": 10,
+                "idle_connections": 100,
+                "max_connections": 200
+            },
+            "specific_event_data": {
+                "idle_connection_threshold": 80,
+                "idle_connection_duration_minutes": 5,
+                "suggested_action": "Review Grafana connection pool settings or implement idle connection termination.",
+                "previous_idle_counts": [
+                    {
+                        "timestamp": "2024-05-29T00:05:00Z",
+                        "idle_count": 70
+                    },
+                    {
+                        "timestamp": "2024-05-29T00:00:00Z",
+                        "idle_count": 50
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0012",
+        "timestamp": "2024-05-29T00:11:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "systemd",
+        "event_summary": "Service 'grafana-agent.service' restarted successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "service_manager",
+                "process_id": 1,
+                "thread_id": "systemd",
+                "file_path": "/var/log/syslog",
+                "log_attributes": {
+                    "host_group": "monitoring_agents",
+                    "service_unit": "grafana-agent.service"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 2.0,
+                "memory_usage_mb": 50,
+                "disk_usage_percent": 10.0,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "service_name": "grafana-agent.service",
+                "action": "restart",
+                "exit_status": "0",
+                "restart_reason": "manual_intervention"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0013",
+        "timestamp": "2024-05-29T00:12:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Dashboard 'CPU Utilization' (id: 456) loaded with errors.",
+        "severity": "ERROR",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0014",
+        "timestamp": "2024-05-29T00:13:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Error scraping target '192.168.1.14:9100': connection refused.",
+        "severity": "ERROR",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0015",
+        "timestamp": "2024-05-29T00:14:00Z",
+        "vm_name": "192.168.1.15",
+        "service_name": "alertmanager",
+        "event_summary": "Failed to send notification via email: SMTP server unreachable.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "notifier",
+                "process_id": 2020,
+                "thread_id": "email-sender",
+                "file_path": "/var/log/alertmanager/alertmanager.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "receiver_name": "email-alerts"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 10.0,
+                "memory_usage_mb": 210,
+                "disk_usage_percent": 31.0,
+                "network_in_kbps": 100.0,
+                "network_out_kbps": 50.0
+            },
+            "specific_event_data": {
+                "failed_receiver": "email-alerts",
+                "error_message": "dial tcp smtp.example.com:587: connect: no route to host",
+                "alerts_in_queue": 5,
+                "incident_id": "INC-AM-001",
+                "impact_description": "Critical alerts not being delivered to on-call engineers.",
+                "suggested_remediation": {
+                    "action_type": "check_network_connectivity",
+                    "command": "ping smtp.example.com",
+                    "estimated_downtime_seconds": 30,
+                    "related_kb_article": "KB-ALERTMANAGER-EMAIL-001",
+                    "escalation_level": {
+                        "tier": 1,
+                        "team": "network-ops",
+                        "contact_method": "phone"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0016",
+        "timestamp": "2024-05-29T00:16:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Data source 'Loki' (id: 3) added successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "data_source_manager",
+                "process_id": 12345,
+                "thread_id": "config-api",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "user": "admin",
+                    "api_endpoint": "/api/datasources"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 7.0,
+                "memory_usage_mb": 320,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 20.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "data_source_name": "Loki",
+                "data_source_type": "loki",
+                "data_source_url": "http://192.168.1.16:3100"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0017",
+        "timestamp": "2024-05-29T00:17:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "HTTP 404 Not Found for '/nonexistent_path'.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "http_handler",
+                "process_id": 1122,
+                "thread_id": "worker-2",
+                "file_path": "/var/log/nginx/error.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "client_ip": "10.0.0.52"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 25.0,
+                "memory_usage_mb": 270,
+                "disk_usage_percent": 26.0,
+                "network_in_kbps": 350.0,
+                "network_out_kbps": 450.0
+            },
+            "specific_event_data": {
+                "status_code": 404,
+                "request_method": "GET",
+                "request_uri": "/nonexistent_path",
+                "referrer": "http://grafana.example.com/",
+                "user_agent": "curl/7.68.0",
+                "suggested_action": "Verify application routing or external links."
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0018",
+        "timestamp": "2024-05-29T00:18:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Database backup initiated successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "backup_manager",
+                "process_id": 9999,
+                "thread_id": "backup-script",
+                "file_path": "/var/log/postgresql/backup.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "backup_type": "full",
+                    "destination": "s3://grafana-backups"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 15.0,
+                "memory_usage_mb": 1600,
+                "disk_usage_percent": 60.0,
+                "network_in_kbps": 0.0,
+                "network_out_kbps": 200.0
+            },
+            "specific_event_data": {
+                "backup_size_gb": 50,
+                "backup_duration_seconds": 3600,
+                "backup_target": "s3"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0019",
+        "timestamp": "2024-05-29T00:19:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Node-exporter configuration reloaded.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "config_manager",
+                "process_id": 9101,
+                "thread_id": "main",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "config_source": "file"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 100,
+                "disk_usage_percent": 75.5,
+                "network_in_kbps": 10.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "reload_status": "successful",
+                "config_version": "v1.2.0"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0020",
+        "timestamp": "2024-05-29T00:20:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Failed to load dashboard from database due to deserialization error.",
+        "severity": "ERROR",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0021",
+        "timestamp": "2024-05-29T00:21:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Prometheus remote write queue is full.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "remote_write",
+                "process_id": 6789,
+                "thread_id": "write-queue",
+                "file_path": "/var/log/prometheus/prometheus.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "remote_endpoint": "https://remote-storage.example.com/api/v1/write"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 55.0,
+                "memory_usage_mb": 850,
+                "disk_usage_percent": 62.0,
+                "network_in_kbps": 300.0,
+                "network_out_kbps": 250.0,
+                "queue_current_size": 10000,
+                "queue_max_size": 10000
+            },
+            "specific_event_data": {
+                "remote_write_target": "remote-storage.example.com",
+                "drop_count_since_last_alert": 500,
+                "suggested_action": "Check remote storage health or increase queue capacity.",
+                "remediation_plan": {
+                    "step_1": "Verify network connectivity to remote storage.",
+                    "step_2": "Check remote storage utilization.",
+                    "step_3": "Increase Prometheus remote_write queue_caps."
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0022",
+        "timestamp": "2024-05-29T00:22:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Nginx detected a 'POST' request with suspicious payload.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "security_module",
+                "process_id": 1122,
+                "thread_id": "request-parser",
+                "file_path": "/var/log/nginx/access.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "security_rule_id": "WAF-001"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 30.0,
+                "memory_usage_mb": 280,
+                "disk_usage_percent": 27.0,
+                "network_in_kbps": 400.0,
+                "network_out_kbps": 500.0
+            },
+            "specific_event_data": {
+                "request_method": "POST",
+                "request_uri": "/api/plugins/install",
+                "client_ip": "10.0.0.100",
+                "payload_size_bytes": 2048,
+                "suspicious_patterns_matched": [
+                    "<script>",
+                    "SQL injection attempt"
+                ],
+                "action_taken": "blocked_request",
+                "security_incident_reference": {
+                    "ticket_id": "SEC-INC-001",
+                    "analyst_assigned": "John Doe",
+                    "status": "pending_review"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0023",
+        "timestamp": "2024-05-29T00:23:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Database replication lag detected.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0024",
+        "timestamp": "2024-05-29T00:24:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Health check endpoint `/api/health` accessed.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "api",
+                "process_id": 12345,
+                "thread_id": "http-server",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "client_ip": "192.168.1.12"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 315,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 10.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "endpoint": "/api/health",
+                "method": "GET",
+                "response_status": "ok",
+                "response_time_ms": 2
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0025",
+        "timestamp": "2024-05-29T00:25:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "System load average high: 5 min avg 12.5.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "system_load",
+                "process_id": 9101,
+                "thread_id": "load-collector",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "num_cpu_cores": 4
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 65.0,
+                "memory_usage_mb": 110,
+                "disk_usage_percent": 76.0,
+                "network_in_kbps": 25.0,
+                "network_out_kbps": 15.0,
+                "load1": 15.2,
+                "load5": 12.5,
+                "load15": 8.1
+            },
+            "specific_event_data": {
+                "load_average_threshold": 10.0,
+                "problematic_processes_hint": [
+                    {
+                        "process_name": "data_aggregator",
+                        "cpu_percent": 40.0
+                    },
+                    {
+                        "process_name": "report_generator",
+                        "cpu_percent": 25.0
+                    }
+                ],
+                "suggested_investigation": "Check for rogue processes or resource bottlenecks."
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0026",
+        "timestamp": "2024-05-29T00:26:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Grafana server responding slowly to API requests.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "api_performance",
+                "process_id": 12345,
+                "thread_id": "http-server",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "api_endpoint": "/api/dashboards"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 60.0,
+                "memory_usage_mb": 700,
+                "disk_usage_percent": 50.0,
+                "network_in_kbps": 200.0,
+                "network_out_kbps": 150.0,
+                "average_request_duration_ms": 1500,
+                "error_rate_percent": 5.0
+            },
+            "specific_event_data": {
+                "slow_request_threshold_ms": 1000,
+                "affected_endpoints": [
+                    "/api/dashboards",
+                    "/api/orgs/1/dashboards"
+                ],
+                "suggested_action": "Investigate database performance or Grafana query optimization.",
+                "performance_bottleneck_data": {
+                    "potential_bottleneck": "database_queries",
+                    "related_db_logs_timeframe_start": "2024-05-29T00:20:00Z",
+                    "related_db_logs_timeframe_end": "2024-05-29T00:26:00Z"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0027",
+        "timestamp": "2024-05-29T00:27:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Prometheus scrape configuration reloaded successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "config_manager",
+                "process_id": 6789,
+                "thread_id": "main",
+                "file_path": "/var/log/prometheus/prometheus.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "config_source": "reload_api"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 15.0,
+                "memory_usage_mb": 810,
+                "disk_usage_percent": 61.0,
+                "network_in_kbps": 50.0,
+                "network_out_kbps": 30.0
+            },
+            "specific_event_data": {
+                "reload_duration_ms": 100,
+                "num_targets_reloaded": 20
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0028",
+        "timestamp": "2024-05-29T00:28:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Successful reverse proxy to Grafana.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "proxy_handler",
+                "process_id": 1122,
+                "thread_id": "worker-3",
+                "file_path": "/var/log/nginx/access.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "upstream_host": "192.168.1.10"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 8.0,
+                "memory_usage_mb": 265,
+                "disk_usage_percent": 25.5,
+                "network_in_kbps": 320.0,
+                "network_out_kbps": 420.0
+            },
+            "specific_event_data": {
+                "status_code": 200,
+                "request_method": "GET",
+                "request_uri": "/grafana/dashboard/home",
+                "client_ip": "10.0.0.53",
+                "upstream_response_time_ms": 150
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0029",
+        "timestamp": "2024-05-29T00:29:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Database checkpoint complete.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "database_internals",
+                "process_id": 3456,
+                "thread_id": "bgwriter",
+                "file_path": "/var/log/postgresql/postgresql.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "db_process_type": "checkpoint"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 10.0,
+                "memory_usage_mb": 1700,
+                "disk_usage_percent": 55.0,
+                "network_in_kbps": 0.0,
+                "network_out_kbps": 0.0
+            },
+            "specific_event_data": {
+                "wal_written_mb": 200,
+                "checkpoint_duration_seconds": 15
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0030",
+        "timestamp": "2024-05-29T00:30:00Z",
+        "vm_name": "192.168.1.15",
+        "service_name": "alertmanager",
+        "event_summary": "Alert 'GrafanaHighCPU' resolved.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "alert_resolution",
+                "process_id": 2020,
+                "thread_id": "alert-resolver",
+                "file_path": "/var/log/alertmanager/alertmanager.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "alert_name": "GrafanaHighCPU"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 205,
+                "disk_usage_percent": 30.5,
+                "network_in_kbps": 50.0,
+                "network_out_kbps": 20.0
+            },
+            "specific_event_data": {
+                "alert_name": "GrafanaHighCPU",
+                "status": "resolved",
+                "resolved_timestamp": "2024-05-29T00:30:00Z",
+                "receiver": "email-alerts",
+                "initial_alert_timestamp": "2024-05-29T00:05:00Z",
+                "resolution_details": {
+                    "action_taken": "Grafana service restarted.",
+                    "resolved_by": "automation",
+                    "affected_vm": "192.168.1.10"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0031",
+        "timestamp": "2024-05-29T00:31:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Configuration reload initiated by API call.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "config_manager",
+                "process_id": 12345,
+                "thread_id": "api-handler",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "source": "api_call",
+                    "user_id": 1
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 8.0,
+                "memory_usage_mb": 330,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 18.0,
+                "network_out_kbps": 9.0
+            },
+            "specific_event_data": {
+                "reload_method": "API",
+                "triggered_by": "user_admin",
+                "config_version_before": "v1.0.0",
+                "config_version_after": "v1.1.0"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0032",
+        "timestamp": "2024-05-29T00:32:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Storage cleanup routine completed.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "tsdb_storage",
+                "process_id": 6789,
+                "thread_id": "compactor",
+                "file_path": "/var/log/prometheus/prometheus.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "storage_path": "/prometheus/data"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 25.0,
+                "memory_usage_mb": 830,
+                "disk_usage_percent": 58.0,
+                "network_in_kbps": 10.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "blocks_compacted": 5,
+                "disk_space_reclaimed_gb": 2.5,
+                "duration_seconds": 120
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0033",
+        "timestamp": "2024-05-29T00:33:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Client connection closed prematurely.",
+        "severity": "WARNING",
+        "details": {
+            "context": {
+                "component": "connection_handler",
+                "process_id": 1122,
+                "thread_id": "worker-4",
+                "file_path": "/var/log/nginx/error.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "client_ip": "10.0.0.54"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 35.0,
+                "memory_usage_mb": 275,
+                "disk_usage_percent": 26.5,
+                "network_in_kbps": 450.0,
+                "network_out_kbps": 550.0
+            },
+            "specific_event_data": {
+                "request_method": "GET",
+                "request_uri": "/grafana/api/health",
+                "bytes_sent": 100,
+                "connection_duration_ms": 500,
+                "reason": "client closed connection"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0034",
+        "timestamp": "2024-05-29T00:34:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Autovacuum worker started for 'grafana.dashboard' table.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "maintenance",
+                "process_id": 3456,
+                "thread_id": "autovacuum",
+                "file_path": "/var/log/postgresql/postgresql.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "table_name": "grafana.dashboard"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 12.0,
+                "memory_usage_mb": 1750,
+                "disk_usage_percent": 56.0,
+                "network_in_kbps": 0.0,
+                "network_out_kbps": 0.0
+            },
+            "specific_event_data": {
+                "table_name": "dashboard",
+                "database_name": "grafana",
+                "vacuum_type": "autovacuum",
+                "start_reason": "threshold_reached"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0035",
+        "timestamp": "2024-05-29T00:35:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Network interface 'eth0' experiencing high packet drops.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "network_monitor",
+                "process_id": 9101,
+                "thread_id": "net-collector",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "interface_name": "eth0"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 70.0,
+                "memory_usage_mb": 120,
+                "disk_usage_percent": 77.0,
+                "network_in_kbps": 500.0,
+                "network_out_kbps": 600.0,
+                "packets_received": 10000,
+                "packets_dropped": 500
+            },
+            "specific_event_data": {
+                "packet_drop_threshold_percent": 1.0,
+                "current_drop_rate_percent": 5.0,
+                "incident_id": "INC-NET-001",
+                "impact_description": "Severe network connectivity issues, affecting all services on this VM.",
+                "suggested_remediation": {
+                    "action_type": "check_network_cables_config",
+                    "command": "ip -s link show eth0",
+                    "estimated_resolution_time_minutes": 90,
+                    "related_kb_article": "KB-NETWORK-DROPS-001",
+                    "escalation_level": {
+                        "tier": 1,
+                        "team": "network-ops",
+                        "contact_method": "call"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0036",
+        "timestamp": "2024-05-29T00:36:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Plugin 'grafana-pie-chart' enabled.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "plugin_manager",
+                "process_id": 12345,
+                "thread_id": "api-handler",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "plugin_id": "grafana-pie-chart"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 6.0,
+                "memory_usage_mb": 340,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 15.0,
+                "network_out_kbps": 8.0
+            },
+            "specific_event_data": {
+                "plugin_name": "Pie Chart",
+                "action": "enable",
+                "status": "success",
+                "plugin_version": "1.0.0"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0037",
+        "timestamp": "2024-05-29T00:37:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "Prometheus remote read request timeout.",
+        "severity": "ERROR",
+        "details": {
+            "context": {
+                "component": "remote_read",
+                "process_id": 6789,
+                "thread_id": "remote-read-goroutine",
+                "file_path": "/var/log/prometheus/prometheus.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "remote_endpoint": "http://longterm-storage.example.com/api/v1/read"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 22.0,
+                "memory_usage_mb": 840,
+                "disk_usage_percent": 62.0,
+                "network_in_kbps": 220.0,
+                "network_out_kbps": 180.0
+            },
+            "specific_event_data": {
+                "query_range_start": "2024-05-28T00:00:00Z",
+                "query_range_end": "2024-05-29T00:00:00Z",
+                "error_message": "client context deadline exceeded (Client.Timeout exceeded while awaiting headers)",
+                "remote_read_target": "longterm-storage.example.com",
+                "incident_id": "INC-PROMETHEUS-003",
+                "impact_description": "Historical data queries failing in Grafana.",
+                "suggested_remediation": {
+                    "action_type": "check_longterm_storage_health",
+                    "command": "ping longterm-storage.example.com",
+                    "estimated_resolution_time_minutes": 45,
+                    "related_kb_article": "KB-PROMETHEUS-REMOTE-READ-001"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0038",
+        "timestamp": "2024-05-29T00:38:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Nginx main process reloaded configuration.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "config_manager",
+                "process_id": 1,
+                "thread_id": "master-process",
+                "file_path": "/var/log/nginx/nginx.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "config_source": "systemctl_reload"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 260,
+                "disk_usage_percent": 25.0,
+                "network_in_kbps": 10.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "reload_status": "successful",
+                "config_file": "/etc/nginx/nginx.conf",
+                "signal": "SIGHUP"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0039",
+        "timestamp": "2024-05-29T00:39:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "postgresql",
+        "event_summary": "Disk full error during transaction commit.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0040",
+        "timestamp": "2024-05-29T00:40:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Grafana shutting down due to database error.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "database_client",
+                "process_id": 12345,
+                "thread_id": "db-connector",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "db_connection_status": "disconnected"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 95.0,
+                "memory_usage_mb": 100,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 50.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "shutdown_reason": "database_unavailable",
+                "database_host": "192.168.1.13",
+                "database_port": 5432,
+                "incident_id": "INC-GRAFANA-003",
+                "impact_description": "Grafana UI completely down, no dashboards available.",
+                "suggested_remediation": {
+                    "action_type": "resolve_database_issue_first",
+                    "command": "See logs on 192.168.1.13 for postgresql",
+                    "estimated_resolution_time_minutes": 240,
+                    "related_kb_article": "KB-GRAFANA-DB-SHUTDOWN-001",
+                    "escalation_level": {
+                        "tier": 0,
+                        "team": "all_ops",
+                        "contact_method": "incident_room"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0041",
+        "timestamp": "2024-05-29T00:41:00Z",
+        "vm_name": "192.168.1.15",
+        "service_name": "alertmanager",
+        "event_summary": "Alert 'DiskFull' (192.168.1.13) fired.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "alert_processing",
+                "process_id": 2020,
+                "thread_id": "alert-receiver",
+                "file_path": "/var/log/alertmanager/alertmanager.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "alert_name": "DiskFull",
+                    "instance": "192.168.1.13"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 12.0,
+                "memory_usage_mb": 220,
+                "disk_usage_percent": 32.0,
+                "network_in_kbps": 120.0,
+                "network_out_kbps": 60.0
+            },
+            "specific_event_data": {
+                "alert_name": "DiskFull",
+                "severity_from_alert": "critical",
+                "receiver": "pagerduty",
+                "status": "firing",
+                "alert_labels": {
+                    "instance": "192.168.1.13:9100",
+                    "job": "node_exporter",
+                    "mountpoint": "/var/lib/postgresql/data"
+                },
+                "incident_id": "INC-AM-002",
+                "impact_description": "Database server disk full, critical impact on Grafana.",
+                "suggested_remediation": {
+                    "action_type": "escalate_to_database_team",
+                    "command": "See database logs on 192.168.1.13",
+                    "estimated_resolution_time_minutes": 10
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0042",
+        "timestamp": "2024-05-29T00:42:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Nginx worker process unresponsive.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "process_management",
+                "process_id": 1122,
+                "thread_id": "master-process",
+                "file_path": "/var/log/nginx/error.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "worker_pid": 1123
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 90.0,
+                "memory_usage_mb": 300,
+                "disk_usage_percent": 28.0,
+                "network_in_kbps": 0.0,
+                "network_out_kbps": 0.0
+            },
+            "specific_event_data": {
+                "unresponsive_worker_pid": 1123,
+                "last_health_check_time": "2024-05-29T00:41:30Z",
+                "incident_id": "INC-NGINX-002",
+                "impact_description": "Nginx unresponsive, Grafana UI inaccessible.",
+                "suggested_remediation": {
+                    "action_type": "restart_nginx_service",
+                    "command": "sudo systemctl restart nginx",
+                    "estimated_downtime_seconds": 10,
+                    "related_kb_article": "KB-NGINX-WORKER-001",
+                    "escalation_level": {
+                        "tier": 1,
+                        "team": "web-ops",
+                        "contact_method": "pager"
+                    }
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0043",
+        "timestamp": "2024-05-29T00:43:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "systemd",
+        "event_summary": "Filesystem '/var/lib/postgresql/data' unmounted due to error.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0044",
+        "timestamp": "2024-05-29T00:44:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Node-exporter unresponsive, no new metrics collected.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0045",
+        "timestamp": "2024-05-29T00:45:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Attempt to restart Grafana server.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 1,
+                "thread_id": "systemd",
+                "file_path": "/var/log/syslog",
+                "log_attributes": {
+                    "environment": "production",
+                    "action_source": "manual_intervention"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 50,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "action": "restart",
+                "service_unit": "grafana-server.service",
+                "triggered_by": "automation_or_operator",
+                "timestamp_of_attempt": "2024-05-29T00:45:00Z"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0046",
+        "timestamp": "2024-05-29T00:46:00Z",
+        "vm_name": "192.168.1.11",
+        "service_name": "prometheus",
+        "event_summary": "No metrics received from '192.168.1.14' for 5 minutes.",
+        "severity": "CRITICAL",
+        "details": null
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0047",
+        "timestamp": "2024-05-29T00:47:00Z",
+        "vm_name": "192.168.1.12",
+        "service_name": "nginx",
+        "event_summary": "Nginx restarted successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 1,
+                "thread_id": "systemd",
+                "file_path": "/var/log/syslog",
+                "log_attributes": {
+                    "environment": "production",
+                    "service_unit": "nginx.service"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 200,
+                "disk_usage_percent": 25.0,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "action": "restart",
+                "exit_status": "0",
+                "startup_duration_ms": 500
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0048",
+        "timestamp": "2024-05-29T00:48:00Z",
+        "vm_name": "192.168.1.10",
+        "service_name": "grafana-server",
+        "event_summary": "Grafana server failed to start: database unavailable.",
+        "severity": "CRITICAL",
+        "details": {
+            "context": {
+                "component": "startup",
+                "process_id": 12345,
+                "thread_id": "main",
+                "file_path": "/var/log/grafana/grafana.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "startup_phase": "db_connection"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 10.0,
+                "memory_usage_mb": 150,
+                "disk_usage_percent": 45.1,
+                "network_in_kbps": 20.0,
+                "network_out_kbps": 5.0
+            },
+            "specific_event_data": {
+                "error_message": "Failed to connect to database: dial tcp 192.168.1.13:5432: connect: connection refused",
+                "db_host": "192.168.1.13",
+                "db_port": 5432,
+                "incident_id": "INC-GRAFANA-004",
+                "impact_description": "Grafana service remains down, no access to dashboards.",
+                "suggested_remediation": {
+                    "action_type": "resolve_db_issue",
+                    "command": "Investigate 192.168.1.13 for postgresql status",
+                    "estimated_resolution_time_minutes": 60,
+                    "related_kb_article": "KB-GRAFANA-DB-CONNECT-001"
+                }
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0049",
+        "timestamp": "2024-05-29T00:49:00Z",
+        "vm_name": "192.168.1.13",
+        "service_name": "systemd",
+        "event_summary": "Attempt to remount filesystem '/var/lib/postgresql/data'.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "storage_manager",
+                "process_id": 1,
+                "thread_id": "kernel",
+                "file_path": "/var/log/syslog",
+                "log_attributes": {
+                    "environment": "production",
+                    "action_source": "manual_intervention"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 10.0,
+                "memory_usage_mb": 60,
+                "disk_usage_percent": 0.0,
+                "network_in_kbps": 0.0,
+                "network_out_kbps": 0.0
+            },
+            "specific_event_data": {
+                "mount_point": "/var/lib/postgresql/data",
+                "device": "/dev/sdb1",
+                "action": "remount",
+                "outcome": "in_progress"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0050",
+        "timestamp": "2024-05-29T00:50:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Node-exporter process started successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 9101,
+                "thread_id": "main",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "service_status": "running"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 70,
+                "disk_usage_percent": 75.0,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "startup_time_ms": 200,
+                "version": "1.7.0"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0050",
+        "timestamp": "2024-05-29T00:50:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Node-exporter process started successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 9101,
+                "thread_id": "main",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "service_status": "running"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 70,
+                "disk_usage_percent": 75.0,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "startup_time_ms": 200,
+                "version": "1.7.0"
+            }
+        }
+    },
+    {
+        "log_entry_id": "GF-LOG-20240529-0050",
+        "timestamp": "2024-05-29T00:50:00Z",
+        "vm_name": "192.168.1.14",
+        "service_name": "node-exporter",
+        "event_summary": "Node-exporter process started successfully.",
+        "severity": "INFO",
+        "details": {
+            "context": {
+                "component": "lifecycle",
+                "process_id": 9101,
+                "thread_id": "main",
+                "file_path": "/var/log/node_exporter/node_exporter.log",
+                "log_attributes": {
+                    "environment": "production",
+                    "service_status": "running"
+                }
+            },
+            "metrics_at_event": {
+                "cpu_usage_percent": 5.0,
+                "memory_usage_mb": 70,
+                "disk_usage_percent": 75.0,
+                "network_in_kbps": 5.0,
+                "network_out_kbps": 10.0
+            },
+            "specific_event_data": {
+                "startup_time_ms": 200,
+                "version": "1.7.0"
+            }
+        }
+    }
+]
