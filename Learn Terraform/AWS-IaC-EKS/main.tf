@@ -182,6 +182,10 @@ resource "aws_eks_node_group" "main" {
   ami_type       = "AL2_x86_64"
   capacity_type  = "ON_DEMAND"
 
+  remote_access {
+    ec2_ssh_key = var.key_pair_name
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.eks_worker_node_policy,
     aws_iam_role_policy_attachment.eks_cni_policy,

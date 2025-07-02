@@ -45,3 +45,9 @@ variable "node_instance_type" {
   type        = string
   default     = "t3.medium"
 }
+
+variable "key_pair_name" {
+  description = "Name of the EC2 Key Pair for SSH access to worker nodes"
+  type        = string
+  default     = "phonerapterx"
+}
