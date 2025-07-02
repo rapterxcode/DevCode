@@ -1,0 +1,4 @@
+export const data = {
+    title: "About",
+    description: "I am a versatile IT professional with over 5 years of experience specializing in enterprise infrastructure and DevOps practices. My expertise spans virtualization technologies like VMware and Proxmox, enterprise storage systems, and server administration across Windows and Linux platforms.\n\nI have hands-on experience with containerization using Docker and Kubernetes, API development with Node.js, and database management. I've implemented monitoring solutions and have strong knowledge of major cloud platforms including Azure, GCP, and Alibaba Cloud.\n\nWith extensive certifications and practical experience in both traditional infrastructure and modern DevOps practices, I bring a comprehensive understanding of enterprise IT systems and cloud technologies.",
+}

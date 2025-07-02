@@ -1,6 +1,0 @@
-@ContactAPI_HostAddress = http://localhost:5101
-
-GET {{ContactAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
