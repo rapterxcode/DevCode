@@ -41,3 +41,5 @@ terraform.rc
 .vscode/
 .idea/
 *.iml
+
+.terraform.lock.hcl
